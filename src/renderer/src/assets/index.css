@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+    background-color: rgb(203, 203, 203);
+    height: 100%;
+}
+
+nav {
+    position: fixed;
+    height: 40px;
+    width: 100%;
+    background-color: #AAA;
+    -webkit-app-region: drag;
+}
