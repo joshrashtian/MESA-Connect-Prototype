@@ -1,9 +1,20 @@
 import React from 'react'
 import { useState } from 'react'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { Link } from 'react-router-dom'
+import { auth } from '../../../../firebase'
 
 const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const signIn = () => {
+    try {
+      signInWithEmailAndPassword(auth, email, password,)
+    } catch (e) {
+      console.log(e)
+  }
+  }
 
   return (
     <div>
@@ -24,11 +35,17 @@ const SignIn = () => {
                 type="text"
                 placeholder="password"
                 onChange={(e) => {
-                  setEmail(e.target.value)
+                  setPassword(e.target.value)
                 }}
                 className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white"
               />
             </div>
+            <Link to={"/signup"}>
+              <div>
+                <h1>Don't Have An Account?</h1>
+              </div>
+            </Link>
+            <button onClick={signIn}>Sign In</button>
           </div>
         </div>
       </div>
