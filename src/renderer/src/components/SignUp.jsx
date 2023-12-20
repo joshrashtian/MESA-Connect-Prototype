@@ -1,18 +1,22 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, db, googleProvider } from '../../../../firebase'
 
 const SignUp = () => {
+    const navigation = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
   
     const signUp = async () => {
+        if(email === '' || password === '') return
         try {
             await createUserWithEmailAndPassword(auth, email, password,)
         } catch (e) {
             console.log(e)
+        } finally {
+            navigation("/signIn")
         }
     }
 
