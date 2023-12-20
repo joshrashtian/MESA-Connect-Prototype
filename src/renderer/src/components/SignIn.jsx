@@ -9,14 +9,14 @@ const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState(null)
+  const [errorMsg, setErrorMessage] = useState(undefined)
   
 
   const signIn = async () => {
     try {
       signInWithEmailAndPassword(auth, email, password,)
-      
     } catch (e) {
-      console.log(e)
+      setErrorMessage(e)
     }
   }
 
@@ -79,12 +79,19 @@ const SignIn = () => {
                 className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white"
               />
             </div>
+            <div className='flex justify-center gap-2 mt-3'>
             <Link to={"/signup"}>
-              <div>
+              <div  className='p-2 bg-cyan-700 text-white rounded-lg px-5'>
                 <h1>Don't Have An Account?</h1>
               </div>
             </Link>
-            <button onClick={signIn}>Sign In</button>
+              <button onClick={signIn} className='p-2 bg-slate-500 text-white rounded-lg px-5'>Sign In</button>
+            </div>
+            { errorMsg != undefined ?
+            <div className='p-10 bg-red-300'>
+              <h1>Error: {errorMsg}</h1>
+            </div>
+            : null}
           </div>
         </div>
       </div>
