@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth'
 import { Link } from 'react-router-dom'
 import { auth } from '../../../../firebase'
-import refactorName from './refactorName'
+import { refactorName } from './functions'
 
 const SignIn = () => {
   const [page, setPage] = useState(0)
@@ -56,7 +56,7 @@ const SignIn = () => {
     if(name === null || name === '') {setErrorMessage('Invalid Username.'); return}
 
     let newName = (refactorName(name));
-    console.log(name)
+    
     if(newName != null){
     try {
       await updateProfile(auth.currentUser, {
@@ -79,7 +79,7 @@ const SignIn = () => {
     return (
       <div>
         <div className="h-screen flex items-center justify-center ">
-          <div className="bg-[#EEEEEE] w-3/5 h-3/5 rounded-2xl shadow-xl ">
+          <div className="bg-[#EEEEEE] w-4/5 h-3/5 rounded-2xl shadow-xl ">
             <div className="m-10">
               <h1 className="font-bold text-6xl">Let's get you Signed In.</h1>
               <div className="flex flex-col mt-6 mx-20">
@@ -124,7 +124,7 @@ const SignIn = () => {
     return (
       <div>
         <div className="h-screen flex items-center justify-center ">
-          <div className="bg-[#EEEEEE] w-3/5 h-3/5 rounded-2xl shadow-xl ">
+          <div className="bg-[#EEEEEE] w-4/5 h-3/5 rounded-2xl shadow-xl ">
           <h1 className="font-bold text-6xl m-5">Account Details</h1>
             <div className='flex m-5 items-center gap-2 bg-gray-200 p-2 rounded-lg'>
             <img src={auth.currentUser.photoURL} className='rounded-2xl h-16 w-16' />

@@ -2,17 +2,25 @@ import React from 'react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-import { auth, db, googleProvider } from '../../../../firebase'
+import { auth, db, googleProvider, userdb } from '../../../../firebase'
+import { collection, setDoc, doc } from 'firebase/firestore'
 
 const SignUp = () => {
     const navigation = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-  
+
     const signUp = async () => {
         if(email === '' || password === '') return
         try {
-            await createUserWithEmailAndPassword(auth, email, password,)
+            await createUserWithEmailAndPassword(auth, email, password).then(cred => {
+              return setDoc(doc(db, 'users', cred.user.uid), {
+                bio: '',
+                email: cred.user.email,
+                realname: [],
+
+              })
+            })
         } catch (e) {
             console.log(e)
         } finally {
