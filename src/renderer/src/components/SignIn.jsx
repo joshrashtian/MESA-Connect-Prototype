@@ -22,13 +22,18 @@ const SignIn = () => {
   const [data, setData] = useState({})
 
   const signIn = async () => {
-    if(email === '' || password === '') {setErrorMessage('Invalid Email/Password.'); return }
+    if (email === '' || password === '') {
+      setErrorMessage('Invalid Email/Password.')
+      return
+    }
     try {
       signInWithEmailAndPassword(auth, email, password)
     } catch (e) {
       setErrorMessage(e)
     } finally {
-      if(auth.currentUser === null) {setErrorMessage('Incorrect Email / Password.')}
+      if (auth.currentUser === null) {
+        setErrorMessage('Incorrect Email / Password.')
+      }
     }
   }
 
@@ -56,40 +61,45 @@ const SignIn = () => {
   }, [])
 
   const updateprofile = async () => {
-    if(name === null || name === '') {setErrorMessage('Invalid Username.'); return}
-
-    let newName = (refactorName(name));
-    
-    if(newName != null){
-    try {
-      await updateProfile(auth.currentUser, {
-        displayName: newName,
-        photoURL: 'https://example.com/jane-q-user/profile.jpg'
-      })
-        .then(() => {
-          setPage(1)
-        })
-        .catch((error) => {})
-
-      console.log(auth.currentUser.displayName)
-    } catch (e) {
-      console.log(e)
+    if (name === null || name === '') {
+      setErrorMessage('Invalid Username.')
+      return
     }
-  }
+
+    if(name.length > 15 || name.length < 3) {setErrorMessage('Username must be between 3 to 15 characters long.'); return}
+
+    let newName = refactorName(name)
+
+    if (newName != null) {
+      try {
+        await updateProfile(auth.currentUser, {
+          displayName: newName,
+          photoURL: 'https://example.com/jane-q-user/profile.jpg'
+        })
+          .then(() => {
+            setPage(1)
+          })
+          .catch((error) => {})
+
+        console.log(auth.currentUser.displayName)
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 
   useEffect(() => {
     const getUser = async () => {
-      if(auth.currentUser.uid != null){
-      try{
-         const ref = await doc(db, 'users', auth.currentUser.uid)
-         const got = await getDoc(ref)
-         console.log(got.data())
-         setData(got.data())
-      } catch (e) {
-        alert(e)
+      if (auth.currentUser.uid != null) {
+        try {
+          const ref = await doc(db, 'users', auth.currentUser.uid)
+          const got = await getDoc(ref)
+          console.log(got.data())
+          setData(got.data())
+        } catch (e) {
+          alert(e)
+        }
       }
-    }
     }
     getUser()
   }, [])
@@ -100,7 +110,7 @@ const SignIn = () => {
         <div className="h-screen flex items-center justify-center ">
           <div className="bg-[#EEEEEE] w-4/5 h-3/5 rounded-2xl shadow-xl ">
             <div className="m-10">
-              <h1 className="font-bold text-6xl">Let's get you Signed In.</h1>
+              <h1 className="text-6xl font-eudoxusbold">Let's get you signed in.</h1>
               <div className="flex flex-col mt-6 mx-20">
                 <input
                   type="text"
@@ -108,15 +118,15 @@ const SignIn = () => {
                   onChange={(e) => {
                     setEmail(e.target.value)
                   }}
-                  className=" px-10 py-2 mt-2 rounded-lg shadow-sm bg-white"
+                  className=" px-10 py-2 mt-2 rounded-lg shadow-sm bg-white font-eudoxus"
                 />
                 <input
-                  type="text"
+                  type="password"
                   placeholder="password"
                   onChange={(e) => {
                     setPassword(e.target.value)
                   }}
-                  className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white"
+                  className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white font-eudoxus"
                 />
               </div>
               <div className="flex justify-center gap-2 mt-3">
@@ -144,16 +154,45 @@ const SignIn = () => {
       <div>
         <div className="h-screen flex items-center justify-center ">
           <div className="bg-[#EEEEEE] w-4/5 h-3/5 rounded-2xl shadow-xl ">
-          <h1 className="font-bold text-6xl m-5">Account Details</h1>
-            <div className='flex m-5 items-center gap-2 bg-gray-200 p-2 rounded-lg'>
-            <img src={auth.currentUser.photoURL} className='rounded-2xl h-16 w-16' />
+            <h1 className="font-bold text-6xl m-5 font-eudoxusbold">Account Details</h1>
+            <div className="flex m-5 justify-between items-center bg-stone-200 p-2 rounded-lg">
+            <div className='flex items-center gap-2'>
+              <img src={auth.currentUser.photoURL} className="rounded-2xl h-16 w-16" />
               <div>
-                <h1 className='font-bold'>{auth.currentUser.email}</h1>
-                <h1 className='font-bold'>{auth.currentUser.displayName}</h1>
+                <h1 className="font-eudoxusbold">{auth.currentUser.email}</h1>
+                <h1 className="font-eudoxusbold">{auth.currentUser.displayName}</h1>
+              </div>
+              </div>
+              <div className='w-[1px] h-12 bg-stone-400 ' />
+              <div>
+              {
+                data != undefined ? 
+                <>
+                <h1 className="font-eudoxusbold text-right">Major: {data.major}</h1>
+                <h1 className="font-eudoxusbold text-right">{auth.currentUser.displayName}</h1>
+                </>
+                : null
+              }
               </div>
             </div>
-            <div className='justify-center items-center flex'>
-              <button onClick={signout} className=' bg-amber-900 hover:bg-amber-700 text-white p-3 px-10 rounded-2xl hover:rounded-xl duration-500'>Sign Out</button>
+            {
+                data === undefined ? 
+                <div className='bg-red-200 mx-5 p-2 my-10 rounded-lg'>Missing Data?</div> 
+                : null
+            }
+            <div className="justify-center items-center flex">
+              <Link
+                to={'/Onboarding'}
+                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                >
+                Onboarding
+              </Link>
+              <button
+                onClick={signout}
+                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+              >
+                Sign Out
+              </button>
             </div>
           </div>
         </div>
@@ -165,7 +204,7 @@ const SignIn = () => {
         <div className="h-screen flex items-center justify-center ">
           <div className="bg-[#EEEEEE] w-3/5 h-3/5 rounded-2xl shadow-xl ">
             <div className="m-10">
-              <h1 className="font-bold text-6xl">Let's finish up a few things.</h1>
+              <h1 className="font-bold text-6xl font-eudoxusbold">Let's finish up a few things.</h1>
               <h1>{auth.currentUser.email}</h1>
               <input
                 type="text"
@@ -175,9 +214,9 @@ const SignIn = () => {
                 }}
                 className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white"
               />
-              <div className='flex'>
-              <button onClick={updateprofile}>Finalize Account</button>
-              <button onClick={signout}>Sign Out</button>
+              <div className="flex">
+                <button onClick={updateprofile}>Finalize Account</button>
+                <button onClick={signout}>Sign Out</button>
               </div>
               {errorMsg != undefined ? (
                 <div className="p-10 bg-red-300">

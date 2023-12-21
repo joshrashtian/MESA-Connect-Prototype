@@ -7,10 +7,20 @@
     height: 100%;
 }
 
+@font-face {
+    font-family: 'eudoxus';
+    src: url(../assets/EudoxusSans-Medium.ttf);
+  }
+  @font-face {
+    font-family: 'eudoxusbold';
+    src: url(../assets/EudoxusSans-Bold.ttf);
+  }
+
 nav {
     position: fixed;
     height: 40px;
     width: 100%;
     background-color: #AAA;
+    align-items: center;
     -webkit-app-region: drag;
 }

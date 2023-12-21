@@ -18,7 +18,8 @@ const SignUp = () => {
                 bio: '',
                 email: cred.user.email,
                 realname: [],
-
+                classes: [{}],
+                major: 'TBA',
               })
             })
         } catch (e) {
@@ -34,10 +35,6 @@ const SignUp = () => {
         } catch (e) {
             console.log(e)
         }
-    }
-
-    const changePhoto = () => {
-
     }
 
   return (
@@ -64,10 +61,10 @@ const SignUp = () => {
               className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white"
             />
           </div>
-          
-          <button onClick={googleSignUp}>Google Sign In</button>
-
-          <button onClick={signUp}>Create Account</button>
+          <div className='flex justify-center mt-10 gap-7'>
+            <button onClick={googleSignUp} className='w-2/5 h-11 bg-blue-800 text-white font-semibold rounded-xl hover:bg-blue-600 duration-200 hover:scale-105'>Google Sign In</button>
+            <button onClick={signUp} className='w-2/5 h-11 bg-stone-800 text-white font-semibold rounded-xl hover:bg-slate-800 duration-200 hover:scale-105'>Create Account</button>
+          </div>
         </div>
       </div>
     </div>

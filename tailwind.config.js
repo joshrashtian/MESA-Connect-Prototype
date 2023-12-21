@@ -1,6 +1,13 @@
 module.exports = {
   content: ['./src/renderer/**/*.{js,jsx,ts,tsx}'],
-  theme: {},
+  theme: {
+    extend: {
+      fontFamily: {
+        'eudoxus': ['eudoxus', 'sans'],
+        'eudoxusbold': ['eudoxusbold']
+      }
+    }
+  },
   variants: {},
   plugins: [],
 };
