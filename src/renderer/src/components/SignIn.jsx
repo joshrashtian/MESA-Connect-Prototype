@@ -8,8 +8,10 @@ import {
   updateProfile
 } from 'firebase/auth'
 import { Link } from 'react-router-dom'
-import { auth } from '../../../../firebase'
+import { auth, userdb } from '../../../../firebase'
 import { refactorName } from './functions'
+import { db } from '../../../../firebase'
+import { doc, getDoc } from 'firebase/firestore'
 
 const SignIn = () => {
   const [page, setPage] = useState(0)
@@ -17,6 +19,7 @@ const SignIn = () => {
   const [password, setPassword] = useState('')
   const [name, setName] = useState(null)
   const [errorMsg, setErrorMessage] = useState(undefined)
+  const [data, setData] = useState({})
 
   const signIn = async () => {
     if(email === '' || password === '') {setErrorMessage('Invalid Email/Password.'); return }
@@ -74,6 +77,22 @@ const SignIn = () => {
     }
   }
   }
+
+  useEffect(() => {
+    const getUser = async () => {
+      if(auth.currentUser.uid != null){
+      try{
+         const ref = await doc(db, 'users', auth.currentUser.uid)
+         const got = await getDoc(ref)
+         console.log(got.data())
+         setData(got.data())
+      } catch (e) {
+        alert(e)
+      }
+    }
+    }
+    getUser()
+  }, [])
 
   if (page == 0) {
     return (
