@@ -169,7 +169,6 @@ const SignIn = () => {
                 data != undefined ? 
                 <>
                 <h1 className="font-eudoxusbold text-right">Major: {data.major}</h1>
-                <h1 className="font-eudoxusbold text-right">{auth.currentUser.displayName}</h1>
                 </>
                 : null
               }
@@ -185,7 +184,13 @@ const SignIn = () => {
                 to={'/Onboarding'}
                 className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
                 >
-                Onboarding
+                Edit Profile Details
+              </Link>
+              <Link
+                to={`/social/${auth.currentUser.uid}`}
+                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                >
+                View Profile
               </Link>
               <button
                 onClick={signout}

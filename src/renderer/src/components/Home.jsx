@@ -4,8 +4,8 @@ import { auth } from '../../../../firebase'
 
 export const Home = () => {
   return (
-    <div className=' justify-evenly items-center h-[100vh]'>
-      <h1 className='m-16 text-5xl font-eudoxusbold '>Good morning, {auth.currentUser != undefined || null ? auth.currentUser.displayName : "guest"}</h1>
+    <div className=' justify-evenly items-center h-screen'>
+      <h1 className='ml-16 mt-16 mb-8 text-5xl font-eudoxusbold '>Good morning, {auth.currentUser != undefined || null ? auth.currentUser.displayName : "guest"}</h1>
       <div className='mx-6 flex gap-10 justify-center'>
         <div className='w-1/2 h-3/4 bg-white rounded-xl'>
           <div className='justify-center text-center p-5'>

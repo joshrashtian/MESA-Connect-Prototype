@@ -8,7 +8,7 @@ const Navigation = () => {
   console.log(SidebarIcons)
 
   return (
-    <div className="fixed gap-5 top-0 left-0 w-[10vw] max-w-[90px] justify-center items-center h-screen bg-gradient-to-b from-[#c76c12] via-[#8d4111] to-[#a33a20] ">
+    <div className="fixed gap-5 top-0 left-0 w-[10vw] max-w-[90px] max-h-screen mt-[40px] justify-center items-center h-screen bg-gradient-to-b from-[#c76c12] via-[#8d4111] to-[#a33a20] ">
       <div className=" mt-[50px] gap-5">
         {SidebarIcons.map((a, index) => (
           <div key={index}>

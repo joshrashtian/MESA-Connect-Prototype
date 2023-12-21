@@ -4,6 +4,8 @@ import Navigation from "./components/Navigation";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Onboarding from "./components/Onboarding";
+import ProfileScreen from "./components/ProfileScreen";
+import Social from "./components/Social";
 
 function App() {
 
@@ -20,6 +22,10 @@ function App() {
         <Route path="/signIn" element={<SignIn />}/>
         <Route path="/signup" element={<SignUp />}/>
         <Route path="/onboarding" element={<Onboarding />}/>
+        <Route path="/social" element={<Social />}>
+          <Route path=":id" element={<ProfileScreen />}/>
+        </Route>
+        {/*<Route path="/news" element={<News />}/> */}
       </Routes>
       </div>
     </div>
