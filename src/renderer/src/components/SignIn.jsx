@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import { auth, userdb } from '../../../../firebase'
 import { refactorName } from './functions'
 import { db } from '../../../../firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 const SignIn = () => {
   const [page, setPage] = useState(0)
@@ -77,9 +77,12 @@ const SignIn = () => {
           photoURL: 'https://example.com/jane-q-user/profile.jpg'
         })
           .then(() => {
+            const ref = doc(db, 'users', auth.currentUser.uid);
+            setDoc(ref, { username: newName }, { merge: true });
+          })
+          .catch((error) => {}).finally(() => {
             setPage(1)
           })
-          .catch((error) => {})
 
         console.log(auth.currentUser.displayName)
       } catch (e) {

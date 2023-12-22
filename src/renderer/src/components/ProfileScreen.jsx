@@ -23,7 +23,8 @@ const ProfileScreen = () => {
 
   return (
     <div className='h-screen'>
-      <h2 className='absolute m-16 font-eudoxusbold text-6xl'>{user.email}</h2>
+      <h2 className='absolute m-16 font-eudoxusbold text-6xl'>{user.realname !== undefined || null ? user.realname : user.username !== undefined || null ? user.username : null}</h2>
+      <h2 className='absolute m-16 mt-32 font-eudoxusbold text-3xl'>{user.username !== undefined || null ? user.username : null}</h2>
     </div>
   )
 }

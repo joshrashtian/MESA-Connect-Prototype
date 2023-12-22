@@ -5,7 +5,7 @@ import { db } from '../../../../firebase'
 
 const Social = () => {
   return (
-    <div className=''>
+    <div className='h-screen'>
      <Outlet />
     </div>
   )
