@@ -6,3 +6,5 @@ export function refactorName(name) {
   let final = copy.join("")
   return final;
 }
+
+export const greetings = ['Good evening', 'Good morning', 'Good afternoon' ]

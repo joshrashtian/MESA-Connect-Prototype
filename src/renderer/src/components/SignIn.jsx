@@ -171,7 +171,8 @@ const SignIn = () => {
               {
                 data != undefined ? 
                 <>
-                <h1 className="font-eudoxusbold text-right">Major: {data.major}</h1>
+                <h1 className="font-eudoxusbold">{data.realname}</h1>
+                <h1 className="font-eudoxusbold text-right">{data.major} Major</h1>
                 </>
                 : null
               }
@@ -182,22 +183,22 @@ const SignIn = () => {
                 <div className='bg-red-200 mx-5 p-2 my-10 rounded-lg'>Missing Data?</div> 
                 : null
             }
-            <div className="justify-center items-center flex">
+            <div className="justify-center items-center sm:flex-col  md:flex-row flex mx-5 gap-2 text-center">
               <Link
                 to={'/Onboarding'}
-                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 sm:w-5/6 lg:px-20 2xl:px-30 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
                 >
                 Edit Profile Details
               </Link>
               <Link
                 to={`/social/${auth.currentUser.uid}`}
-                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 sm:w-5/6 lg:px-20 2xl:px-30 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
                 >
                 View Profile
               </Link>
               <button
                 onClick={signout}
-                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 sm:w-5/6 lg:px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
               >
                 Sign Out
               </button>
