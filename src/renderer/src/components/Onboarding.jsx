@@ -6,8 +6,8 @@ const Onboarding = () => {
   const [data, setData] = useState({})
 
   const [classes, setClasses] = useState([{}])
-  const [firstname, setfirstname] = useState('John')
-  const [lastname, setlastname] = useState('Doe')
+  const [firstname, setfirstname] = useState('')
+  const [lastname, setlastname] = useState('')
   const [bio, setbio] = useState('')
   const [major, setmajor] = useState('')
 

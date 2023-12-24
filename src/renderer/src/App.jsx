@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import Onboarding from "./components/Onboarding";
 import ProfileScreen from "./components/ProfileScreen";
 import Social from "./components/Social";
+import Activity from "./components/Social/Activity";
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/signup" element={<SignUp />}/>
         <Route path="/onboarding" element={<Onboarding />}/>
         <Route path="/social" element={<Social />}>
+          <Route path="" element={<Activity />} />
           <Route path=":id" element={<ProfileScreen />}/>
         </Route>
         {/*<Route path="/news" element={<News />}/> */}

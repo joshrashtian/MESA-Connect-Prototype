@@ -4,6 +4,7 @@ import { auth } from '../../../../firebase'
 import { getDoc, doc } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { greetings } from './functions'
+import { onAuthStateChanged } from 'firebase/auth'
 
 export const Home = () => {
   const [user, setUser] = useState({})
@@ -20,6 +21,11 @@ export const Home = () => {
   }
 
   useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if(user) console.log('Signed In As: ' + user.displayName)
+      else console.log('No user signed in.')
+    })
+
     const getUser = async () => {
       try {
         const userRef = doc(db, 'users', auth.currentUser.uid)
