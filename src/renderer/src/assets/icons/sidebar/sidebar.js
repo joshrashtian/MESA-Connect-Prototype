@@ -2,6 +2,7 @@ import { auth } from '../../../../../../firebase'
 import Home from '../../icons/Home.jpg'
 import UserIcon from '../../icons/UserIcon.png'
 import Social from '../../icons/Social.png'
+import { useEffect } from 'react'
 
 export const SidebarIcons = [{
     id: 0,

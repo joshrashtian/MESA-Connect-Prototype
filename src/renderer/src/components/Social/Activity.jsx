@@ -25,11 +25,14 @@ const Activity = () => {
 
   return (
     <div className="h-screen">
-      <h1 className="m-16 font-eudoxusbold text-6xl">Activity</h1>
-      <div className="flex flex-col flex-wrap">
+      <h1 className="m-16 mb-4 font-eudoxusbold text-6xl">Activity</h1>
+      <div className="flex flex-col m-16">
+        <h1 className="font-eudoxusbold mb-2 text-slate-600 text-3xl">Recent Posts</h1>
         {posts.map((post) => (
-          <div className="p-12 mr-[50vh] bg-white" key={post.id}>
-            <h1>{post.header}</h1>
+          <div className="w-[50%] rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200" key={post.id}>
+            <div className='m-3'>
+            <h1 className=' font-eudoxusbold text-2xl'>{post.header}</h1>
+            <div className='flex flex-col'>
             {post.contents !== undefined
               ? post.contents.map((content, index) => (
                   <div key={index}>
@@ -37,6 +40,8 @@ const Activity = () => {
                   </div>
                 ))
               : null}
+              </div>
+              </div>
           </div>
         ))}
       </div>

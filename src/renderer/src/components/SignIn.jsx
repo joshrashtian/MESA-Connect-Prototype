@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import {
   createUserWithEmailAndPassword,
@@ -8,9 +8,10 @@ import {
   updateProfile
 } from 'firebase/auth'
 import { Link } from 'react-router-dom'
-import { auth, userdb } from '../../../../firebase'
+import { auth, storage, userdb } from '../../../../firebase'
 import { refactorName } from './functions'
 import { db } from '../../../../firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 const SignIn = () => {
@@ -20,6 +21,8 @@ const SignIn = () => {
   const [name, setName] = useState(null)
   const [errorMsg, setErrorMessage] = useState(undefined)
   const [data, setData] = useState({})
+
+  const picRef = useRef()
 
   const signIn = async () => {
     if (email === '' || password === '') {
@@ -43,6 +46,39 @@ const SignIn = () => {
     } catch (e) {
       console.log(e)
     }
+  }
+
+  const changeImage = async (e) => {
+    if(!e.target.files[0]) return
+    let pic = (e.target.files[0])
+    let refName = `profpictures/${pic.name}`
+      const storRef = ref(storage, refName)
+      try {
+      await uploadBytes(storRef, pic).then(() => { 
+        getDownloadURL(storRef)
+          .then((img) => {
+            updateProfile(auth.currentUser, {
+              displayName: auth.currentUser.displayName,
+              photoURL: img
+            })
+              .then(() => {
+                const ref = doc(db, 'users', auth.currentUser.uid);
+                setDoc(ref, { photoURL: img }, { merge: true });
+              })
+              .catch((error) => {
+                console.error(error)
+              })
+          }).catch((e) => {
+            console.error(e)
+          })
+      })
+      } catch (e) {
+        console.error(e)
+      }
+  }
+
+  const fileUpload = () => {
+
   }
 
   useEffect(() => {
@@ -160,7 +196,8 @@ const SignIn = () => {
             <h1 className="font-bold text-6xl m-5 font-eudoxusbold">Account Details</h1>
             <div className="flex m-5 justify-between items-center bg-stone-200 p-2 rounded-lg">
             <div className='flex items-center gap-2'>
-              <img src={auth.currentUser.photoURL} className="rounded-2xl h-16 w-16" />
+            <input type='file' onChange={changeImage} ref={picRef} style={{ display: 'none'}} />
+            <img src={auth.currentUser.photoURL} className="rounded-2xl h-16 w-16" onChange={() => {changeImage}} onClick={() => {picRef.current.click()}} />
               <div>
                 <h1 className="font-eudoxusbold">{auth.currentUser.email}</h1>
                 <h1 className="font-eudoxusbold">{auth.currentUser.displayName}</h1>
