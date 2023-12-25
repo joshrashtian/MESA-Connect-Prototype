@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { auth } from '../../../../firebase'
 import { SidebarIcons } from '../assets/icons/sidebar/sidebar.js'
+import UserIcon from '../assets/icons/UserIcon.png'
 
 const Navigation = () => {
 

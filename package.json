@@ -21,6 +21,7 @@
     "@electron-toolkit/utils": "^2.0.0",
     "electron-updater": "^6.1.1",
     "firebase": "^10.7.1",
+    "framer-motion": "^10.16.16",
     "react-router-dom": "^6.20.1"
   },
   "devDependencies": {

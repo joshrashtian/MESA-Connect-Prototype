@@ -22,6 +22,7 @@ const SignIn = () => {
   const [errorMsg, setErrorMessage] = useState(undefined)
   const [data, setData] = useState({})
 
+  const [currentpic, setCurrentPic] = useState(auth.currentUser.photoURL)
   const picRef = useRef()
 
   const signIn = async () => {
@@ -49,37 +50,37 @@ const SignIn = () => {
   }
 
   const changeImage = async (e) => {
-    if(!e.target.files[0]) return
-    let pic = (e.target.files[0])
-    let refName = `profpictures/${pic.name}`
-      const storRef = ref(storage, refName)
-      try {
-      await uploadBytes(storRef, pic).then(() => { 
+    if (!e.target.files[0]) return
+    let pic = e.target.files[0]
+    let refName = `profpictures/${auth.currentUser.uid}`
+    const storRef = ref(storage, refName)
+    try {
+      await uploadBytes(storRef, pic).then(() => {
         getDownloadURL(storRef)
           .then((img) => {
+            setCurrentPic(img)
             updateProfile(auth.currentUser, {
               displayName: auth.currentUser.displayName,
               photoURL: img
             })
               .then(() => {
-                const ref = doc(db, 'users', auth.currentUser.uid);
-                setDoc(ref, { photoURL: img }, { merge: true });
+                const ref = doc(db, 'users', auth.currentUser.uid)
+                setDoc(ref, { photoURL: img }, { merge: true })
               })
               .catch((error) => {
                 console.error(error)
               })
-          }).catch((e) => {
+          })
+          .catch((e) => {
             console.error(e)
           })
       })
-      } catch (e) {
-        console.error(e)
-      }
+    } catch (e) {
+      console.error(e)
+    }
   }
 
-  const fileUpload = () => {
-
-  }
+  const fileUpload = () => {}
 
   useEffect(() => {
     setErrorMessage(null)
@@ -102,7 +103,10 @@ const SignIn = () => {
       return
     }
 
-    if(name.length > 15 || name.length < 3) {setErrorMessage('Username must be between 3 to 15 characters long.'); return}
+    if (name.length > 15 || name.length < 3) {
+      setErrorMessage('Username must be between 3 to 15 characters long.')
+      return
+    }
 
     let newName = refactorName(name)
 
@@ -113,10 +117,11 @@ const SignIn = () => {
           photoURL: 'https://example.com/jane-q-user/profile.jpg'
         })
           .then(() => {
-            const ref = doc(db, 'users', auth.currentUser.uid);
-            setDoc(ref, { username: newName }, { merge: true });
+            const ref = doc(db, 'users', auth.currentUser.uid)
+            setDoc(ref, { username: newName }, { merge: true })
           })
-          .catch((error) => {}).finally(() => {
+          .catch((error) => {})
+          .finally(() => {
             setPage(1)
           })
 
@@ -195,42 +200,52 @@ const SignIn = () => {
           <div className="bg-[#EEEEEE] w-4/5 h-3/5 rounded-2xl shadow-xl ">
             <h1 className="font-bold text-6xl m-5 font-eudoxusbold">Account Details</h1>
             <div className="flex m-5 justify-between items-center bg-stone-200 p-2 rounded-lg">
-            <div className='flex items-center gap-2'>
-            <input type='file' onChange={changeImage} ref={picRef} style={{ display: 'none'}} />
-            <img src={auth.currentUser.photoURL} className="rounded-2xl h-16 w-16" onChange={() => {changeImage}} onClick={() => {picRef.current.click()}} />
-              <div>
-                <h1 className="font-eudoxusbold">{auth.currentUser.email}</h1>
-                <h1 className="font-eudoxusbold">{auth.currentUser.displayName}</h1>
+              <div className="flex items-center gap-2">
+                <input
+                  type="file"
+                  onChange={changeImage}
+                  ref={picRef}
+                  style={{ display: 'none' }}
+                />
+                <img
+                  src={currentpic}
+                  className="rounded-2xl h-16 w-16 hover:scale-110 duration-300 shadow-lg hover:shadow-2xl cursor-pointer"
+                  onChange={() => {
+                    changeImage
+                  }}
+                  onClick={() => {
+                    picRef.current.click()
+                  }}
+                />
+                <div>
+                  <h1 className="font-eudoxusbold">{auth.currentUser.email}</h1>
+                  <h1 className="font-eudoxusbold">{auth.currentUser.displayName}</h1>
+                </div>
               </div>
-              </div>
-              <div className='w-[1px] h-12 bg-stone-400 ' />
+              <div className="w-[1px] h-12 bg-stone-400 " />
               <div>
-              {
-                data != undefined ? 
-                <>
-                <h1 className="font-eudoxusbold">{data.realname}</h1>
-                <h1 className="font-eudoxusbold text-right">{data.major} Major</h1>
-                </>
-                : null
-              }
+                {data != undefined ? (
+                  <>
+                    <h1 className="font-eudoxusbold">{data.realname}</h1>
+                    <h1 className="font-eudoxusbold text-right">{data.major} Major</h1>
+                  </>
+                ) : null}
               </div>
             </div>
-            {
-                data === undefined ? 
-                <div className='bg-red-200 mx-5 p-2 my-10 rounded-lg'>Missing Data?</div> 
-                : null
-            }
+            {data === undefined ? (
+              <div className="bg-red-200 mx-5 p-2 my-10 rounded-lg">Missing Data?</div>
+            ) : null}
             <div className="justify-center items-center sm:flex-col  md:flex-row flex mx-5 gap-2 text-center">
               <Link
                 to={'/Onboarding'}
                 className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 sm:w-5/6 lg:px-20 2xl:px-30 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
-                >
+              >
                 Edit Profile Details
               </Link>
               <Link
                 to={`/social/${auth.currentUser.uid}`}
                 className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 sm:w-5/6 lg:px-20 2xl:px-30 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
-                >
+              >
                 View Profile
               </Link>
               <button
