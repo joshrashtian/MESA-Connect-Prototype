@@ -49,9 +49,9 @@ export const Home = () => {
             <h1 className='font-eudoxus text-xl'>News Around MESA</h1>
           </div>
         </div>
-        <div className='w-1/2 h-1/2 bg-white font-semibold rounded-xl'>
+        <div className='w-1/2 h-1/2 bg-white rounded-xl'>
           <div className='justify-center text-center p-5'>
-            <h1 className='font-eudoxus text-xl'>MESA News</h1>
+            <h1 className='font-eudoxus text-xl'>News Around MESA</h1>
           </div>
         </div>
       </section>
