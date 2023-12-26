@@ -5,6 +5,7 @@ import { getDoc, doc } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { greetings } from './functions'
 import { onAuthStateChanged } from 'firebase/auth'
+import { motion } from 'framer-motion'
 
 export const Home = () => {
   const [user, setUser] = useState({})
@@ -42,7 +43,7 @@ export const Home = () => {
 
   return (
     <div className=' justify-evenly items-center h-screen'>
-      <h1 className='ml-16 mt-16 mb-8 text-5xl font-eudoxusbold '>{greeting}, {user.realname !== null || undefined ? user.realname : auth.currentUser != undefined || null ? auth.currentUser.displayName : "guest"}</h1>
+      <motion.h1 transition={{delay: 0.2}} initial={{x: -20, opacity: '0%'}} animate={{x: 0, opacity: '100%'}}  className='ml-16 mt-16 mb-8 text-5xl font-eudoxusbold '>{greeting}, {user.realname !== null || undefined ? user.realname : auth.currentUser != undefined || null ? auth.currentUser.displayName : "guest"}</motion.h1>
       <section className='mx-6 flex gap-10 justify-center'>
         <div className='w-1/2 h-3/4 bg-white rounded-xl'>
           <div className='justify-center text-center p-5'>
