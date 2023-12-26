@@ -13,6 +13,7 @@ import { refactorName } from './functions'
 import { db } from '../../../../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { motion } from 'framer-motion'
 
 const SignIn = () => {
   const [page, setPage] = useState(0)
@@ -22,7 +23,7 @@ const SignIn = () => {
   const [errorMsg, setErrorMessage] = useState(undefined)
   const [data, setData] = useState({})
 
-  const [currentpic, setCurrentPic] = useState(auth.currentUser.photoURL)
+  const [currentpic, setCurrentPic] = useState()
   const picRef = useRef()
 
   const signIn = async () => {
@@ -87,19 +88,15 @@ const SignIn = () => {
 
     onAuthStateChanged(auth, (user) => {
       console.log(user)
-      if (!user) {
-        setPage(0)
-      } else if (user.displayName == null) {
-        setPage(2)
-      } else {
-        setPage(1)
-      }
+      if (!user) { setPage(0) } 
+      else if (user.displayName == null) { setPage(2) } 
+      else { setPage(1) + setCurrentPic(auth.currentUser.photoURL) }
     })
   }, [])
 
   const updateprofile = async () => {
     if (name === null || name === '') {
-      setErrorMessage('Invalid Username.')
+      setErrorMessage('Must provide a username.')
       return
     }
 
@@ -184,9 +181,9 @@ const SignIn = () => {
                 </button>
               </div>
               {errorMsg != undefined ? (
-                <div className="p-10 bg-red-300">
+                <motion.div className="p-10 bg-red-300">
                   <h1>Error: {errorMsg}</h1>
-                </div>
+                </motion.div>
               ) : null}
             </div>
           </div>
@@ -209,7 +206,7 @@ const SignIn = () => {
                 />
                 <img
                   src={currentpic}
-                  className="rounded-2xl h-16 w-16 hover:scale-110 duration-300 shadow-lg hover:shadow-2xl cursor-pointer"
+                  className="rounded-full h-16 w-16 hover:scale-110 duration-300 shadow-lg hover:shadow-2xl cursor-pointer"
                   onChange={() => {
                     changeImage
                   }}
@@ -280,9 +277,11 @@ const SignIn = () => {
                 <button onClick={signout}>Sign Out</button>
               </div>
               {errorMsg != undefined ? (
-                <div className="p-10 bg-red-300">
-                  <h1>Error: {errorMsg}</h1>
-                </div>
+                <motion.div initial={{opacity: '0%', y: -20}} animate={{opacity: '100%', y: 0}} transition={{ type: 'spring', stiffness: 500, damping: 20 }} className="p-5 bg-red-300 flex gap-3 items-center rounded-lg shadow-lg">
+                  <motion.div className='font-eudoxus text-white cursor-pointer' whileHover={{scale: 1.5}} transition={{type: 'spring', stiffness: 500, damping: 25}} onClick={() => {setErrorMessage(undefined)}} >x</motion.div>
+                  <h1 className='text-red-500 p-1.5 rounded-xl bg-white font-eudoxusbold'>ERROR</h1>
+                  <h1 className='text-white font-eudoxusbold'>{errorMsg}</h1>
+                </motion.div>
               ) : null}
             </div>
           </div>

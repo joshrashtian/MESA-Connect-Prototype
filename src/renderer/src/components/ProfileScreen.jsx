@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { collection, doc, getDoc } from 'firebase/firestore'
-import { db, storage } from '../../../../firebase'
+import { auth, db, storage } from '../../../../firebase'
 import UserIcon from '../assets/icons/UserIcon.png'
+import NoPosts from './Social/Profile/NoPosts'
+import LoadingScreen from './LoadingScreen'
 
 const ProfileScreen = () => {
   const { id } = useParams()
   const [user, setUser] = useState({})
   const [posts, setPosts] = useState(undefined);
-
+  const [aUser, setAuser] = useState()
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -16,12 +19,17 @@ const ProfileScreen = () => {
         const got = await getDoc(userRef)
         console.log(got.data())
         setUser(got.data())
+        setLoading(false)
       } catch (e) {
         alert(e)
       }
     }
+    if(auth.currentUser) setAuser (auth.currentUser.uid)
+    else setAuser(null)
     getUser()
   }, [])
+
+  if(loading)return <LoadingScreen />;
 
   return (
     <div className="h-screen">
@@ -39,7 +47,7 @@ const ProfileScreen = () => {
                 : null}
           </h2>
           <h2 className="font-eudoxusbold ml-4 text-red-800 text-3xl">
-            Your Account
+            {aUser !== null || undefined ? auth.currentUser.uid === id ? 'Your Account' : null : null}
           </h2>
           </div>
           <h2 className="font-eudoxusbold text-3xl">
@@ -53,7 +61,7 @@ const ProfileScreen = () => {
       <section className='ml-16'>
         <h1 className='font-eudoxusbold text-3xl'>Recent Posts</h1>
         {posts != undefined ? 
-          <h1>Posts!</h1> : <h1>No Posts :(</h1>
+          <h1>Posts!</h1> : <NoPosts user={user.username} />
         }
       </section>
     </div>

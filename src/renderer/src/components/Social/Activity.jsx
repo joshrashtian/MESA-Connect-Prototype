@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../../../../../firebase'
 import Post from './Post'
 import { motion } from 'framer-motion'
+import LoadingScreen from '../LoadingScreen'
 
 const Activity = () => {
   const [posts, setPosts] = useState([{}])
@@ -27,16 +28,16 @@ const Activity = () => {
     console.log(posts)
   }, [])
 
-  if(loading) return;
+  if(loading) return <LoadingScreen />;
 
   return (
-    <div className="h-screen">
-      <h1 className="m-16 mb-4 font-eudoxusbold text-6xl">Activity</h1>
+    <motion.div className="h-screen" initial={{opacity: '0%'}} animate={{opacity: '100%'}}>
+      <motion.h1 className="m-16 mb-4 font-eudoxusbold text-6xl" initial={{y: 20}}>Activity</motion.h1>
       <div className="flex flex-col m-16">
         <h1 className="font-eudoxusbold mb-2 text-slate-600 text-3xl">Recent Posts</h1>
         {posts.map((e) => <Post post={e} current={e.userID} />)}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

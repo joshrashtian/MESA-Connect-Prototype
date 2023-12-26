@@ -1,6 +1,7 @@
 import { doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { db } from '../../../../../firebase'
+import { Link } from 'react-router-dom'
 
 const Post = ({ post, current }) => {
   const [user, setUser] = useState({})
@@ -28,10 +29,12 @@ const Post = ({ post, current }) => {
       <div className="m-3">
         <header className='flex justify-between items-center'>
         <h1 className=" font-eudoxusbold text-2xl">{post.header}</h1>
-        <div className='flex items-center gap-2'>
-          <h1 className={`font-eudoxusbold `}>{user.realname !== undefined ? user.realname : null}</h1>
-          <img src={user.photoURL} className='w-8 h-8' />
-        </div>
+        <Link to={`/social/${current}`}>
+          <div className='flex items-center p-2 gap-2 cursor-pointer hover:shadow-md rounded-md scale-105 duration-200'>
+            <h1 className={`font-eudoxusbold `}>{user.realname !== undefined ? user.realname : null}</h1>
+            <img src={user.photoURL} className='w-8 h-8' />
+          </div>
+        </Link>
         </header>
         <div className="flex flex-col">
           {post.contents !== undefined
