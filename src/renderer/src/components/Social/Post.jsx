@@ -23,7 +23,7 @@ const Post = ({ post, current }) => {
 
   return (
     <div
-      className="w-[50%] rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200"
+      className="w-[50%] py-0.5 mb-3 rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200"
       key={post.id}
     >
       <div className="m-3">

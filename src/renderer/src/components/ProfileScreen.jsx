@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { collection, doc, getDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { auth, db, storage } from '../../../../firebase'
 import UserIcon from '../assets/icons/UserIcon.png'
 import NoPosts from './Social/Profile/NoPosts'
 import LoadingScreen from './LoadingScreen'
+import Post from './Social/Post'
 
 const ProfileScreen = () => {
   const { id } = useParams()
@@ -17,16 +18,31 @@ const ProfileScreen = () => {
       try {
         const userRef = doc(db, 'users', id)
         const got = await getDoc(userRef)
-        console.log(got.data())
         setUser(got.data())
         setLoading(false)
       } catch (e) {
         alert(e)
       }
     }
+
+    const getPosts = async () => {
+      try {
+        const q = query(collection(db, "posts"), where("userID", "==", id));
+        const newData = await getDocs(q)
+        console.log(newData)
+        const final = newData.docs.map(e => ({
+          ...e.data(), id: e.id
+        }))
+        setPosts(final)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
     if(auth.currentUser) setAuser (auth.currentUser.uid)
     else setAuser(null)
     getUser()
+    getPosts()
   }, [])
 
   if(loading)return <LoadingScreen />;
@@ -61,7 +77,7 @@ const ProfileScreen = () => {
       <section className='ml-16'>
         <h1 className='font-eudoxusbold text-3xl'>Recent Posts</h1>
         {posts != undefined ? 
-          <h1>Posts!</h1> : <NoPosts user={user.username} />
+          posts.map(post => (<Post post={post} user={id} />)) : <NoPosts user={user.username} />
         }
       </section>
     </div>

@@ -28,14 +28,20 @@ const Activity = () => {
     console.log(posts)
   }, [])
 
-  if(loading) return <LoadingScreen />;
+  if (loading) return <LoadingScreen />
 
   return (
-    <motion.div className="h-screen" initial={{opacity: '0%'}} animate={{opacity: '100%'}}>
-      <motion.h1 className="m-16 mb-4 font-eudoxusbold text-6xl" initial={{y: 20}}>Activity</motion.h1>
+    <motion.div className="h-screen" initial={{ opacity: '0%' }} animate={{ opacity: '100%' }}>
+      <motion.h1 className="m-16 mb-4 font-eudoxusbold text-6xl" initial={{ y: 20 }}>
+        Activity
+      </motion.h1>
       <div className="flex flex-col m-16">
         <h1 className="font-eudoxusbold mb-2 text-slate-600 text-3xl">Recent Posts</h1>
-        {posts.map((e) => <Post post={e} current={e.userID} />)}
+        <div className='my-1'>
+          {posts.map((e) => (
+            <Post post={e} current={e.userID} />
+          ))}
+        </div>
       </div>
     </motion.div>
   )
