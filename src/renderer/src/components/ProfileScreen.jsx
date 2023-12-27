@@ -74,11 +74,13 @@ const ProfileScreen = () => {
           </h2>
         </div>
       </header>
-      <section className='ml-16'>
+      <section className='ml-12'>
         <h1 className='font-eudoxusbold text-3xl'>Recent Posts</h1>
+        <div className='gap-2 flex flex-col mt-5'>
         {posts != undefined ? 
-          posts.map(post => (<Post post={post} user={id} />)) : <NoPosts user={user.username} />
+          posts.map(e => (<Post post={e} user={e.userID} />)) : <NoPosts user={user.username} />
         }
+        </div>
       </section>
     </div>
   )

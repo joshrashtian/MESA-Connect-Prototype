@@ -9,7 +9,7 @@ const Post = ({ post, current }) => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const userRef = doc(db, 'users', current)
+        const userRef = doc(db, 'users', post.userID)
         const got = await getDoc(userRef)
         console.log(got.data())
         setUser(got.data())
@@ -29,8 +29,8 @@ const Post = ({ post, current }) => {
       <div className="m-3">
         <header className='flex justify-between items-center'>
         <h1 className=" font-eudoxusbold text-2xl">{post.header}</h1>
-        <Link to={`/social/${current}`}>
-          <div className='flex items-center p-2 gap-2 cursor-pointer hover:shadow-md rounded-md scale-105 duration-200'>
+        <Link to={`/social/${post.userID}`}>
+          <div className='flex items-center px-1 gap-2 cursor-pointer hover:shadow-md rounded-md hover:scale-105 duration-200'>
             <h1 className={`font-eudoxusbold `}>{user.realname !== undefined ? user.realname : null}</h1>
             <img src={user.photoURL} className='w-8 h-8' />
           </div>
