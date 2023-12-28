@@ -38,9 +38,9 @@ const Activity = () => {
       <div className="flex flex-col m-16">
         <h1 className="font-eudoxusbold mb-2 text-slate-600 text-3xl">Recent Posts</h1>
         <div className='my-1'>
-          {posts.map((e) => (
-            <Post post={e} current={e.userID} />
-          ))}
+          {posts.map((e, index) => {
+           if(!e.type) return <motion.div initial={{x: -20, opacity: '0%'}} animate={{x: 0, opacity: '100%'}} transition={{delay: 0.1 + (0.1 * index)}}><Post post={e} current={e.userID} /></motion.div>
+          })}
         </div>
       </div>
     </motion.div>

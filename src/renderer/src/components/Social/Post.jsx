@@ -27,14 +27,16 @@ const Post = ({ post, current }) => {
       key={post.id}
     >
       <div className="m-3">
-        <header className='flex justify-between items-center'>
-        <h1 className=" font-eudoxusbold text-2xl">{post.header}</h1>
-        <Link to={`/social/${post.userID}`}>
-          <div className='flex items-center px-1 gap-2 cursor-pointer hover:shadow-md rounded-md hover:scale-105 duration-200'>
-            <h1 className={`font-eudoxusbold `}>{user.realname !== undefined ? user.realname : null}</h1>
-            <img src={user.photoURL} className='w-8 h-8' />
-          </div>
-        </Link>
+        <header className="flex justify-between items-center">
+          <h1 className=" font-eudoxusbold text-2xl">{post.header}</h1>
+          <Link to={`/social/${post.userID}`}>
+            <div className="flex items-center px-1 gap-2 cursor-pointer hover:shadow-md rounded-md hover:scale-105 duration-200">
+              <h1 className={`font-eudoxusbold `}>
+                {user.realname !== undefined ? user.realname : null}
+              </h1>
+              <img src={user.photoURL} className="w-8 h-8" />
+            </div>
+          </Link>
         </header>
         <div className="flex flex-col">
           {post.contents !== undefined
