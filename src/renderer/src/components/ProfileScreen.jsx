@@ -10,7 +10,7 @@ import Post from './Social/Post'
 const ProfileScreen = () => {
   const { id } = useParams()
   const [user, setUser] = useState({})
-  const [posts, setPosts] = useState(undefined);
+  const [posts, setPosts] = useState(undefined)
   const [aUser, setAuser] = useState()
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -27,11 +27,12 @@ const ProfileScreen = () => {
 
     const getPosts = async () => {
       try {
-        const q = query(collection(db, "posts"), where("userID", "==", id));
+        const q = query(collection(db, 'posts'), where('userID', '==', id))
         const newData = await getDocs(q)
         console.log(newData)
-        const final = newData.docs.map(e => ({
-          ...e.data(), id: e.id
+        const final = newData.docs.map((e) => ({
+          ...e.data(),
+          id: e.id
         }))
         setPosts(final)
       } catch (e) {
@@ -39,48 +40,62 @@ const ProfileScreen = () => {
       }
     }
 
-    if(auth.currentUser) setAuser (auth.currentUser.uid)
+    if (auth.currentUser) setAuser(auth.currentUser.uid)
     else setAuser(null)
     getUser()
     getPosts()
   }, [])
 
-  if(loading)return <LoadingScreen />;
+  if (loading) return <LoadingScreen />
 
   return (
     <div className="h-screen">
       <header className=" m-16 ml-12 flex">
-        
-        <img src={user.photoURL !== null || undefined ? user.photoURL : UserIcon} className="h-32 w-32 mr-10 rounded-full bg-white" />
-        
+        <img
+          src={user.photoURL !== null || undefined ? user.photoURL : UserIcon}
+          className="h-32 w-32 mr-10 rounded-full bg-white"
+        />
+
         <div>
-          <div className='flex items-center'>
-          <h2 className="font-eudoxusbold text-6xl">
-            {user.realname !== undefined || null
-              ? user.realname
-              : user.username !== undefined || null
-                ? user.username
+          <div className="flex items-center">
+            <h2 className="font-eudoxusbold text-6xl">
+              {user.realname !== undefined || null
+                ? user.realname
+                : user.username !== undefined || null
+                  ? user.username
+                  : null}
+            </h2>
+            <h2 className="font-eudoxusbold ml-4 text-red-800 text-3xl">
+              {aUser !== null || undefined
+                ? auth.currentUser.uid === id
+                  ? 'Your Account'
+                  : null
                 : null}
-          </h2>
-          <h2 className="font-eudoxusbold ml-4 text-red-800 text-3xl">
-            {aUser !== null || undefined ? auth.currentUser.uid === id ? 'Your Account' : null : null}
-          </h2>
+            </h2>
           </div>
           <h2 className="font-eudoxusbold text-3xl">
             {user.username !== undefined || null ? user.username : null}
           </h2>
-          <h2 className="font-eudoxusbold text-xl">
+          <h2 className={`font-eudoxus text-emerald-700 text-xl bg-gray-200 rounded-xl w-[36%] text-center`}>
             Joined {user.joined !== undefined || null ? user.joined.toDate().toDateString() : null}
           </h2>
         </div>
       </header>
-      <section className='ml-12'>
-        <h1 className='font-eudoxusbold text-3xl'>Recent Posts</h1>
-        <div className='gap-2 flex flex-col mt-5'>
-        {posts != undefined ? 
-          posts.map(e => (<Post post={e} user={e.userID} />)) : <NoPosts user={user.username} />
-        }
-        </div>
+      <section className="flex justify-between gap-2">
+        <section className="ml-10 w-[66%]">
+          <h1 className="font-eudoxusbold text-3xl">Recent Posts</h1>
+          <div className="gap-2 flex flex-col mt-5">
+            {posts != undefined ? (
+              posts.map((e) => <Post post={e} type="profile" user={e.userID} />)
+            ) : (
+              <NoPosts user={user.username} />
+            )}
+          </div>
+        </section>
+        <section className="mr-10 w-[33%] text-right">
+          <h1 className="font-eudoxusbold text-3xl">Friends</h1>
+          {user.friends != undefined ? <div>Friends</div> : <h1>No Friends</h1>}
+        </section>
       </section>
     </div>
   )

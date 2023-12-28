@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { db } from '../../../../../firebase'
 import { Link } from 'react-router-dom'
 
-const Post = ({ post, current }) => {
+const Post = ({ post, current, type }) => {
   const [user, setUser] = useState({})
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Post = ({ post, current }) => {
 
   return (
     <div
-      className="w-[50%] py-0.5 mb-3 rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200"
+      className={`${!type ? 'w-[50%]' : 'w-[100%]'} py-0.5 mb-3 rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
       key={post.id}
     >
       <div className="m-3">

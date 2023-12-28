@@ -33,15 +33,35 @@ const Activity = () => {
 
   return (
     <motion.div className="h-screen" initial={{ opacity: '0%' }} animate={{ opacity: '100%' }}>
-      <motion.h1 className="m-16 mb-4 font-eudoxusbold text-6xl" initial={{ y: 20 }}>
+      <motion.h1
+        className="m-16 mb-4 font-eudoxusbold text-6xl bg-gradient-to-tr "
+        initial={{ y: 20 }}
+      >
         Activity
       </motion.h1>
       <div className="flex flex-col m-16">
         <h1 className="font-eudoxusbold mb-2 text-slate-600 text-3xl">Recent Posts</h1>
-        <div className='my-1'>
+        <div className="my-1">
+          <section className="flex w-[50%] justify-evenly mb-4 bg-slate-300 p-3 rounded-xl">
+            <button className=" bg-gradient-to-r from-amber-600 to-amber-500 hover:scale-105 duration-300  w-[45%] rounded-lg shadow-xl py-2">
+              <h1 className='text-white font-eudoxus'>Create Post</h1>
+            </button>
+            <button className="text-white font-eudoxus bg-gradient-to-r from-blue-500 to-blue-400 hover:scale-105 duration-300  w-[45%] rounded-lg shadow-xl py-2">
+              <h1 className='text-white font-eudoxus'>Create A Wim</h1>
+            </button>
+          </section>
           {posts.map((e, index) => {
-           if(!e.type) return <motion.div initial={{x: -20, opacity: '0%'}} animate={{x: 0, opacity: '100%'}} transition={{delay: 0.1 + (0.1 * index)}}><Post post={e} current={e.userID} /></motion.div>
-           if(e.type == 'wim') return <Wim />
+            if (!e.type)
+              return (
+                <motion.div
+                  initial={{ x: -20, opacity: '0%' }}
+                  animate={{ x: 0, opacity: '100%' }}
+                  transition={{ delay: 0.1 + 0.1 * index }}
+                >
+                  <Post post={e} current={e.userID} />
+                </motion.div>
+              )
+            if (e.type == 'wim') return <Wim />
           })}
         </div>
       </div>
