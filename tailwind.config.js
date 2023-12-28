@@ -4,7 +4,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'eudoxus': ['eudoxus', 'sans'],
-        'eudoxusbold': ['eudoxusbold']
+        'eudoxusbold': ['eudoxusbold'],
+        'jet': ['JetMono']
       }
     }
   },

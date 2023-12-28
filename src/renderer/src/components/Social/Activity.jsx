@@ -4,6 +4,7 @@ import { db } from '../../../../../firebase'
 import Post from './Post'
 import { motion } from 'framer-motion'
 import LoadingScreen from '../LoadingScreen'
+import Wim from './PostTypes/Wim'
 
 const Activity = () => {
   const [posts, setPosts] = useState([{}])
@@ -40,6 +41,7 @@ const Activity = () => {
         <div className='my-1'>
           {posts.map((e, index) => {
            if(!e.type) return <motion.div initial={{x: -20, opacity: '0%'}} animate={{x: 0, opacity: '100%'}} transition={{delay: 0.1 + (0.1 * index)}}><Post post={e} current={e.userID} /></motion.div>
+           if(e.type == 'wim') return <Wim />
           })}
         </div>
       </div>

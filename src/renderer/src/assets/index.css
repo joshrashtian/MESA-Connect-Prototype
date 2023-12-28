@@ -16,6 +16,19 @@
     src: url(../assets/EudoxusSans-Bold.ttf);
   }
 
+@font-face {
+  font-family: 'JetMono';
+  src: url(../assets//JetBrainsMono-Regular.ttf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'JetMono';
+  src: url(../assets/Fonts/JetBrainsMono-SemiBold.ttf);
+  font-weight: bold;
+}
+
+
 nav {
     position: fixed;
     height: 40px;
