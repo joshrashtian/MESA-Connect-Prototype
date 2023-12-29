@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 const Post = ({ post, current, type }) => {
   const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const getUser = async () => {
@@ -13,6 +14,8 @@ const Post = ({ post, current, type }) => {
         const got = await getDoc(userRef)
         console.log(got.data())
         setUser(got.data())
+        console.log('User: ', user)
+        if(user) setLoading(false)
       } catch (e) {
         console.log(e)
       }
@@ -21,9 +24,11 @@ const Post = ({ post, current, type }) => {
     getUser()
   }, [])
 
+  if (loading) return
+
   return (
     <div
-      className={`${!type ? 'w-[50%]' : 'w-[100%]'} py-0.5 mb-3 rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
+      className={`${!type ? 'w-[100%]' : 'w-[100%]'} py-0.5 mb-3 rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
       key={post.id}
     >
       <div className="m-3">

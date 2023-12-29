@@ -1,5 +1,10 @@
 class Settings {
-    lang = 'ENG';
+
+    constructor(lang, mode){
+        this.lang = lang;
+        this.mode = mode;
+    }
+
 }
 
-export const settings = new Settings()
+export const settings = new Settings('ENG', 'light')

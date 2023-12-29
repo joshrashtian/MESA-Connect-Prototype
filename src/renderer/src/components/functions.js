@@ -8,3 +8,5 @@ export function refactorName(name) {
 }
 
 export const greetings = ['Good evening', 'Good morning', 'Good afternoon' ]
+
+export const forums = ['School', 'Life', 'Projects', 'Computer Science', 'Pre Med']
