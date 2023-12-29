@@ -40,7 +40,7 @@ const Wim = ({ wim }) => {
           </Link>
         </header>
         <div className="flex flex-col">
-          <h1>{wim.text}</h1>
+          <h1 className='font-eudoxus text-slate-700 my-1'>{wim.text}</h1>
         </div>
       </div>
     </div>

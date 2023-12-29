@@ -7,6 +7,7 @@ import Onboarding from "./components/Onboarding";
 import ProfileScreen from "./components/ProfileScreen";
 import Social from "./components/Social";
 import Activity from "./components/Social/Activity";
+import PostBuilder from "./components/Social/PostBuilder";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/onboarding" element={<Onboarding />}/>
         <Route path="/social" element={<Social />}>
           <Route path="" element={<Activity />} />
+          <Route path='create' element={<PostBuilder />} />
           <Route path=":id" element={<ProfileScreen />}/>
         </Route>
         {/*<Route path="/news" element={<News />}/> */}

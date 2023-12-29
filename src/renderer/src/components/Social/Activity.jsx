@@ -7,6 +7,7 @@ import LoadingScreen from '../LoadingScreen'
 import Wim from './PostTypes/Wim'
 import { forums } from '../functions'
 import QuickWim from './QuickWim'
+import { Link } from 'react-router-dom'
 
 const Activity = () => {
   const [posts, setPosts] = useState([{}])
@@ -53,9 +54,9 @@ const Activity = () => {
           <section className={`flex w-[100%] ${ menu == 0 ? 'justify-evenly' : null} mb-4 bg-[#BBB] p-3 rounded-xl`}>
             { menu == 0 ?
             <>
-            <button className=" bg-gradient-to-r from-amber-600 to-amber-500 hover:scale-105 duration-300  w-[45%] rounded-lg shadow-xl py-2">
-              <h1 className='text-white font-eudoxus'>Create Post</h1>
-            </button>
+            <Link to='/social/create' className=" bg-gradient-to-r from-amber-600 to-amber-500 hover:scale-105 duration-300  w-[45%] rounded-lg shadow-xl py-2">
+              <h1 className='text-white font-eudoxus text-center'>Create Post</h1>
+            </Link>
             <button className="text-white font-eudoxus bg-gradient-to-r from-blue-500 to-blue-400 hover:scale-105 duration-300  w-[45%] rounded-lg shadow-xl py-2" onClick={() => {setMenu(1)}}>
               <h1 className='text-white font-eudoxus'>Create A Wim</h1>
             </button>

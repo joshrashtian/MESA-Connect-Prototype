@@ -5,10 +5,6 @@ import Social from '../../icons/Social.png'
 import { useEffect } from 'react'
 
 export const SidebarIcons = [{
-    id: 0,
-    icon: UserIcon,
-    link: '/signIn'
-},{
     id: 1,
     icon: Home,
     link: '/',
