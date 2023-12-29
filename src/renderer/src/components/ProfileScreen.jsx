@@ -6,6 +6,7 @@ import UserIcon from '../assets/icons/UserIcon.png'
 import NoPosts from './Social/Profile/NoPosts'
 import LoadingScreen from './LoadingScreen'
 import Post from './Social/Post'
+import Wim from './Social/PostTypes/Wim'
 
 const ProfileScreen = () => {
   const { id } = useParams()
@@ -86,7 +87,10 @@ const ProfileScreen = () => {
           <h1 className="font-eudoxusbold text-3xl">Recent Posts</h1>
           <div className="gap-2 flex flex-col mt-5">
             {posts != undefined ? (
-              posts.map((e) => <Post post={e} type="profile" user={e.userID} />)
+              posts.map((e) => {
+              if(!e.type) return <Post post={e} type="profile" user={e.userID} />
+              if(e.type == 'wim') return <Wim wim={e} />
+            })
             ) : (
               <NoPosts user={user.username} />
             )}

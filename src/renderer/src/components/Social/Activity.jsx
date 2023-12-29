@@ -50,7 +50,7 @@ const Activity = () => {
         <h1 className="font-eudoxusbold mb-2 text-slate-600 text-3xl">Recent Posts</h1>
         <div className='flex justify-between'>
         <div className="my-1 w-[70%]">
-          <section className="flex w-[100%] justify-evenly mb-4 bg-[#BBB] p-3 rounded-xl">
+          <section className={`flex w-[100%] ${ menu == 0 ? 'justify-evenly' : null} mb-4 bg-[#BBB] p-3 rounded-xl`}>
             { menu == 0 ?
             <>
             <button className=" bg-gradient-to-r from-amber-600 to-amber-500 hover:scale-105 duration-300  w-[45%] rounded-lg shadow-xl py-2">
@@ -60,7 +60,7 @@ const Activity = () => {
               <h1 className='text-white font-eudoxus'>Create A Wim</h1>
             </button>
             </>
-            : <QuickWim />}
+            : <QuickWim exit={() => {setMenu(0)}} />}
           </section>
           {posts.map((e, index) => {
             if (!e.type)
@@ -73,7 +73,7 @@ const Activity = () => {
                   <Post post={e} current={e.userID} />
                 </motion.div>
               )
-            if (e.type == 'wim') return <Wim />
+            if (e.type == 'wim') return <Wim wim={e} />
           })}
         </div>
         <section className='w-3/12 bg-slate-500 rounded-xl shadow-lg'>
