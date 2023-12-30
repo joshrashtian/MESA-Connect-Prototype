@@ -21,10 +21,10 @@ const PostBuilder = () => {
             />
             <textarea
               onChange={(e) => setText(e.target.value)}
-              className="h-[88%] font-eudoxus focus:outline-none w-full bg-gradient-to-tr from-white to-slate-100 rounded-xl text-left p-3"
+              className="h-[50%] font-eudoxus focus:outline-none w-full bg-gradient-to-tr from-white to-slate-100 rounded-xl text-left p-3"
               placeholder="Text..."
             />
-            {text.length != 0 ? (
+            {!text ? null : text.length != 0 ? (
               <motion.div
                 className="bg-[#ddd] flex gap-10 p-3 justify-center"
                 initial={{ opacity: '0%', y: -20 }}

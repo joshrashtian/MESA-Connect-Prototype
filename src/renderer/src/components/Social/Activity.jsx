@@ -2,7 +2,7 @@ import { collection, getDocs } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { db } from '../../../../../firebase'
 import Post from './Post'
-import { motion } from 'framer-motion'
+import { motion, useScroll } from 'framer-motion'
 import LoadingScreen from '../LoadingScreen'
 import Wim from './PostTypes/Wim'
 import { forums } from '../functions'
@@ -15,6 +15,8 @@ const Activity = () => {
   const [menu, setMenu] = useState(0)
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState()
+
+  const { scrollYProgress } = useScroll()
 
   useEffect(() => {
     const getFeed = async () => {
