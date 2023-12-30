@@ -259,33 +259,43 @@ const SignIn = () => {
   } else if (page == 2) {
     return (
       <div>
-        <div className="h-screen flex items-center justify-center ">
+        <page className="h-screen flex items-center justify-center ">
           <div className="bg-[#EEEEEE] w-3/5 h-3/5 rounded-2xl shadow-xl ">
-            <div className="m-10">
+            <section className="m-10">
               <h1 className="font-bold text-6xl font-eudoxusbold">Let's finish up a few things.</h1>
-              <h1>{auth.currentUser.email}</h1>
+              <section className='bg-stone-200 p-3 mt-3 rounded-xl duration-200 '>
+                <h1 className='font-jet text-stone-500'>Your Email: {auth.currentUser.email}</h1>
+                <h1 className='font-jet text-stone-500'>Full Name: {data.realname}</h1>
+                {!name ? null : 
+                <div className='flex justify-between'>
+                <h1 className='font-jet text-stone-500'> Username: {refactorName(name)}</h1>
+                <h1 className='font-jet text-slate-400'>{name.length > 15 ? 'Name Too Long!' : name.length < 3 ? 'Name Too Short!' : null}</h1>
+                </div>
+                }
+
+              </section>
               <input
                 type="text"
                 placeholder="display name"
                 onChange={(e) => {
                   setName(e.target.value)
                 }}
-                className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white"
+                className="w-full px-10 py-2 mt-4 rounded-lg shadow-lg bg-gradient-to-br from-white to-slate-200 hover:shadow-xl duration-500 focus:outline-none text-slate-600"
               />
-              <div className="flex">
-                <button onClick={updateprofile}>Finalize Account</button>
-                <button onClick={signout}>Sign Out</button>
+              <div className="flex justify-center mt-5 gap-5">
+                <button className='w-1/2 h-12 rounded-2xl shadow-lg bg-gradient-to-tr from-orange-400 to-amber-300 hover:bg-amber-700 text-lg font-eudoxus text-white hover:scale-105 duration-200 hover:shadow-xl ' onClick={updateprofile}>Finalize Account</button>
+                <button className='w-1/2 h-12 rounded-2xl shadow-lg bg-gradient-to-tr from-orange-400 to-amber-300 hover:bg-amber-700 text-lg font-eudoxus text-white hover:scale-105 duration-200 hover:shadow-xl ' onClick={signout}>Sign Out</button>
               </div>
               {errorMsg != undefined ? (
-                <motion.div initial={{opacity: '0%', y: -20}} animate={{opacity: '100%', y: 0}} transition={{ type: 'spring', stiffness: 500, damping: 20 }} className="p-5 bg-red-300 flex gap-3 items-center rounded-lg shadow-lg">
+                <motion.div initial={{opacity: '0%', y: -20}} animate={{opacity: '100%', y: 0}} transition={{ type: 'spring', stiffness: 500, damping: 20 }} className="p-5 bg-red-300 flex gap-3 mt-2 items-center rounded-lg shadow-lg">
                   <motion.div className='font-eudoxus text-white cursor-pointer' whileHover={{scale: 1.5}} transition={{type: 'spring', stiffness: 500, damping: 25}} onClick={() => {setErrorMessage(undefined)}} >x</motion.div>
                   <h1 className='text-red-500 p-1.5 rounded-xl bg-white font-eudoxusbold'>ERROR</h1>
                   <h1 className='text-white font-eudoxusbold'>{errorMsg}</h1>
                 </motion.div>
               ) : null}
-            </div>
+            </section>
           </div>
-        </div>
+        </page>
       </div>
     )
   }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { auth, db } from '../../../../../../firebase'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import OptionsButton from './OptionsButton'
 
 const Wim = ({ wim }) => {
   const [user, setUser] = useState({})
@@ -42,21 +43,17 @@ const Wim = ({ wim }) => {
               </div>
             </div>
           </Link>
-          { auth.currentUser?.uid === wim.userID ?
-          <div className='flex flex-col gap-1 hover:scale-110 p-2 duration-150 cursor-pointer' onClick={() => {menu ? setMenu(false) : setMenu(true)}}>
+          <div className='flex duration-150 cursor-pointer' onClick={() => {!menu ? setMenu(true) : null}}>
+            <div className='flex p-2 flex-col gap-1 hover:scale-110' onClick={() => {menu ? setMenu(false) : setMenu(true)}}>
             <div className="h-1 w-1 bg-slate-800" />
             <div className="h-1 w-1 bg-slate-800" />
             <div className="h-1 w-1 bg-slate-800" />
+            </div>
 
             { menu ? 
-            <motion.div className='absolute mt-8 ml-[-50px] bg-white rounded-lg p-2 shadow-xl'>
-              <motion.div initial={{scale: 0.7, opacity: '0%'}} animate={{scale: 1, opacity: '100%'}} transition={{ duration: 0.1, type: 'spring'}} className='w-32 h-auto py-2 flex justify-center items-center bg-white hover:bg-slate-200 duration-500 rounded-lg'>
-                <h1 className='font-jet text-slate-500'>Delete Post</h1>
-              </motion.div>
-            </motion.div>
+            <OptionsButton post={wim.id} isOwner={auth.currentUser?.uid === wim.userID} />
             : null }
           </div>
-          : null}
         </header>
         <div className="flex flex-col">
           <h1 className="font-eudoxus text-slate-700 my-1">{wim.text}</h1>

@@ -5,18 +5,17 @@ import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, db, googleProvider, userdb } from '../../../../firebase'
 import { collection, setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { refactorName } from './functions'
+import { motion } from 'framer-motion'
 
 const SignUp = () => {
     const navigation = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [realname, setRealName] = useState('')
-    const [name, setName] = useState('')
     const [errorMsg, setErrorMessage] = useState()
 
     const signUp = async () => {
-        if(email === '' || password === '' || name === '' || realname === '') {setErrorMessage('One or more fields are empty.'); return}
-        if(name.length > 15 || name.length < 3) {setErrorMessage('Username must be between 3 to 15 characters long.'); return}
+        if(email === '' || password === '' || realname === '') {setErrorMessage('One or more fields are empty.'); return}
 
         let newName = refactorName(name) 
 
@@ -56,10 +55,10 @@ const SignUp = () => {
           <h1 className="font-bold text-6xl font-eudoxusbold">Create Account</h1>
           <div className="flex flex-col mt-6 mx-20">
             {errorMsg != undefined ? (
-                <div className="p-5 bg-red-300 shadow-sm rounded-lg flex flex-row-reverse justify-between">
+                <motion.div className="p-5 bg-red-300 shadow-sm rounded-lg flex flex-row-reverse justify-between">
                   <div className='font-eudoxus text-white cursor-pointer' onClick={() => {setErrorMessage(undefined)}} >x</div>
                   <h1 className='font-eudoxus text-white'>Error: {errorMsg}</h1>
-                </div>
+                </motion.div>
               ) : null}
             <input
               type="text"
@@ -74,14 +73,6 @@ const SignUp = () => {
               placeholder="password"
               onChange={(e) => {
                 setPassword(e.target.value)
-              }}
-              className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white font-eudoxus"
-            />
-            <input
-              type="text"
-              placeholder="username"
-              onChange={(e) => {
-                setName(e.target.value)
               }}
               className=" px-10 py-2 mt-1 rounded-lg shadow-sm bg-white font-eudoxus"
             />

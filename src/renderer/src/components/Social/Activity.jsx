@@ -41,9 +41,9 @@ const Activity = () => {
   if (loading) return <LoadingScreen />
 
   return (
-    <motion.div className="h-screen" initial={{ opacity: '0%' }} animate={{ opacity: '100%' }}>
+    <motion.div className="h-screen overflow-y-scroll no-scrollbar" initial={{ opacity: '0%' }} animate={{ opacity: '100%' }}>
       <motion.h1
-        className="m-16 mb-4 font-eudoxusbold text-6xl bg-gradient-to-tr "
+        className="m-16 mb-4 font-eudoxusbold text-6xl "
         initial={{ x: -20, y: 20, opacity: '0%' }}
         animate={{y: 20, x: 0, opacity: '100%'}}
       >
