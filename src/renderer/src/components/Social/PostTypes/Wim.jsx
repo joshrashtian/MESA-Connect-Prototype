@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 const Wim = ({ wim }) => {
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true)
+  const [menu, setMenu] = useState(false)
 
   useEffect(() => {
     const getUser = async () => {
@@ -31,16 +32,29 @@ const Wim = ({ wim }) => {
       <div className="m-3">
         <header className="flex justify-between items-center">
           <Link to={`/social/${wim.userID}`}>
-            <div className="flex flex-row-reverse items-center px-1 gap-2 cursor-pointer hover:shadow-md rounded-md hover:scale-105 duration-200">
-              <h1 className={`font-eudoxusbold `}>
-                {user.realname !== undefined ? user.realname : null}
-              </h1>
-              <img src={user.photoURL} className="w-8 h-8 rounded-full" />
+            <div className="flex justify-evenly items-center cursor-pointer rounded-md duration-200">
+              <div className="flex items-center gap-2 hover:shadow-md hover:scale-105 duration-200">
+                <img src={user.photoURL} className="w-8 h-8 rounded-full" />
+                <h1 className={`font-eudoxusbold `}>
+                  {user.realname !== undefined ? user.realname : null}
+                </h1>
+              </div>
             </div>
           </Link>
+          <div className='flex flex-col gap-1' onClick={() => {menu ? setMenu(false) : setMenu(true)}}>
+            <div className="h-1 w-1 bg-slate-800" />
+            <div className="h-1 w-1 bg-slate-800" />
+            <div className="h-1 w-1 bg-slate-800" />
+
+            { menu ? 
+            <div className='absolute mt-8 ml-[-50px] w-24 h-auto py-2 flex justify-center items-center bg-white rounded-lg'>
+              <h1>Delete</h1>
+            </div>
+            : null }
+          </div>
         </header>
         <div className="flex flex-col">
-          <h1 className='font-eudoxus text-slate-700 my-1'>{wim.text}</h1>
+          <h1 className="font-eudoxus text-slate-700 my-1">{wim.text}</h1>
         </div>
       </div>
     </div>
