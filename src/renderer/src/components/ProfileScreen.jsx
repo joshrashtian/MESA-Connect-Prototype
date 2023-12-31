@@ -14,6 +14,8 @@ const ProfileScreen = () => {
   const [posts, setPosts] = useState(undefined)
   const [aUser, setAuser] = useState()
   const [loading, setLoading] = useState(true)
+  const [date, setDate] = useState()
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -77,8 +79,8 @@ const ProfileScreen = () => {
           <h2 className="font-eudoxusbold text-3xl">
             {user.username !== undefined || null ? user.username : null}
           </h2>
-          <h2 className={`font-eudoxus text-emerald-700 text-xl bg-gray-200 rounded-xl w-[36%] text-center`}>
-            Joined {user.joined !== undefined || null ? user.joined.toDate().toDateString() : null}
+          <h2 className={`mt-3 p-1 font-eudoxusbold text-emerald-700 text-xl bg-gray-300 rounded-xl w-[50%] text-center`}>
+            Joined {user.joined !== undefined || null ? `${user.joined.toDate().getMonth() + 1}/${user.joined.toDate().getDate()}/${user.joined.toDate().getFullYear()}` : null}
           </h2>
         </div>
       </header>
@@ -86,14 +88,16 @@ const ProfileScreen = () => {
         <section className="ml-10 w-[66%]">
           <h1 className="font-eudoxusbold text-3xl">Recent Posts</h1>
           <div className="gap-2 flex flex-col mt-5">
-            {posts != undefined ? (
+            {posts ? posts.length !== 0 ? (
               posts.map((e) => {
               if(!e.type) return <Post post={e} type="profile" user={e.userID} />
               if(e.type == 'wim') return <Wim wim={e} />
             })
             ) : (
               <NoPosts user={user.username} />
-            )}
+            ) : (
+              <NoPosts user={user.username} />)
+              }
           </div>
         </section>
         <section className="mr-10 w-[33%] text-right">

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import OptionsButton from './OptionsButton'
 
-const Wim = ({ wim }) => {
+const Wim = ({ wim, update }) => {
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(true)
   const [menu, setMenu] = useState(false)
@@ -51,7 +51,7 @@ const Wim = ({ wim }) => {
             </div>
 
             { menu ? 
-            <OptionsButton post={wim.id} isOwner={auth.currentUser?.uid === wim.userID} />
+            <OptionsButton update={update} post={wim.id} isOwner={auth.currentUser?.uid === wim.userID} />
             : null }
           </div>
         </header>

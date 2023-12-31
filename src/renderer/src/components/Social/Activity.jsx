@@ -5,7 +5,7 @@ import Post from './Post'
 import { motion, useScroll } from 'framer-motion'
 import LoadingScreen from '../LoadingScreen'
 import Wim from './PostTypes/Wim'
-import { forums } from '../functions'
+import { deletePost, forums } from '../functions'
 import QuickWim from './QuickWim'
 import { Link } from 'react-router-dom'
 
@@ -17,26 +17,26 @@ const Activity = () => {
   const [filter, setFilter] = useState()
 
   const { scrollYProgress } = useScroll()
-
-  useEffect(() => {
-    const getFeed = async () => {
-      try {
-        const postsRef = collection(db, 'posts')
-        const fetchData = await getDocs(postsRef)
-        const postData = fetchData.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id
-        }))
-        setPosts(postData)
-        setLoading(false)
-      } catch (e) {
-        alert(e)
-      }
+  
+  const getFeed = async () => {
+    try {
+      const postsRef = collection(db, 'posts')
+      const fetchData = await getDocs(postsRef)
+      const postData = fetchData.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id
+      }))
+      setPosts(postData)
+      setLoading(false)
+    } catch (e) {
+      alert(e)
     }
+  }
+
+  useEffect(() => {  
     getFeed()
     console.log(posts)
   }, [])
-
 
   if (loading) return <LoadingScreen />
 
@@ -76,7 +76,14 @@ const Activity = () => {
                   <Post post={e} current={e.userID} />
                 </motion.div>
               )
-            if (e.type == 'wim') return <Wim wim={e} />
+            if (e.type == 'wim') return (
+              <motion.div initial={{ x: -20, opacity: '0%' }}
+              animate={{ x: 0, opacity: '100%' }}
+              transition={{ delay: 0.1 + 0.1 * index }}
+            >
+              <Wim wim={e} update={getFeed()} />
+              </motion.div>
+            ) 
           })}
         </div>
         <section className='w-3/12 bg-slate-500 rounded-xl shadow-lg'>
