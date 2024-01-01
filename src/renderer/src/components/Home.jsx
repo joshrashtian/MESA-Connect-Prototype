@@ -7,6 +7,7 @@ import { greetings } from './functions'
 import { onAuthStateChanged } from 'firebase/auth'
 import { motion } from 'framer-motion'
 import LoadingScreen from './LoadingScreen'
+import EventPanel from './Events/Event'
 
 export const Home = () => {
   const [user, setUser] = useState({realname: null})
@@ -49,7 +50,7 @@ export const Home = () => {
   if(loading) return <LoadingScreen />
 
   return (
-    <motion.div className=' justify-evenly items-center h-screen' initial={{opacity: '0%'}} animate={{opacity: '100%'}} >
+    <motion.div className=' justify-evenly items-center h-screen no-scrollbar overflow-y-scroll' initial={{opacity: '0%'}} animate={{opacity: '100%'}} >
       <motion.h1 transition={{delay: 0.4}} initial={{x: -20, opacity: '0%'}} animate={{x: 0, opacity: '100%'}}  className='ml-16 mt-16 mb-8 text-5xl font-eudoxusbold '>{greeting}, {user.realname != null ? user.realname : "guest"}</motion.h1>
       <section className='mx-6 flex gap-10 justify-center'>
         <div className='w-1/2 h-3/4 bg-white rounded-xl'>
@@ -64,7 +65,8 @@ export const Home = () => {
         </div>
       </section>
       <h1 className='ml-16 mt-16 mb-8 text-3xl font-eudoxusbold'>Current Events You May Be Interested In</h1>
-      <section>
+      <section className='mx-10'>
+        <EventPanel />
       </section>
     </motion.div>
   )

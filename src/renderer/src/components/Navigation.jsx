@@ -23,9 +23,9 @@ const Navigation = () => {
     <div className="fixed gap-5 top-0 left-0 w-[10vw] max-w-[90px] max-h-screen mt-[40px] justify-center items-center h-screen bg-gradient-to-b from-[#c76c12] via-[#8d4111] to-[#a33a20] ">
       <div className=" mt-[50px] gap-5">
         <Link to="/signIn">
-          <div className=" relative bg-white w-[6vw] h-[6vw] max-w-[75px] max-h-[75px] hover:scale-110 hover:shadow-2xl rounded-3xl hover:rounded-2xl mx-auto mt-5  shadow-xl duration-300 transition-all">
+          <div className="flex justify-center items-center bg-white w-[6vw] h-[6vw] max-w-[75px] max-h-[75px] hover:scale-110 hover:shadow-2xl rounded-3xl hover:rounded-2xl mx-auto mt-5  shadow-xl duration-300 transition-all">
             <div className="flex justify-center items-center p-2">
-              <img className="w-[90%] h-[90%]" src={prof} />
+              <img className="w-[90%] h-[90%] rounded-full" src={prof} />
             </div>
           </div>
         </Link>
