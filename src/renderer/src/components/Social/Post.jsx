@@ -2,6 +2,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { db } from '../../../../../firebase'
 import { Link } from 'react-router-dom'
+import OptionsButton from './PostTypes/OptionsButton'
 
 const Post = ({ post, current, type }) => {
   const [user, setUser] = useState({})
@@ -30,6 +31,7 @@ const Post = ({ post, current, type }) => {
     <div
       className={`${!type ? 'w-[100%]' : 'w-[100%]'} py-0.5 mb-3 rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
       key={post.id}
+      onContextMenu={e => {e.preventDefault() (<OptionsButton />)}}
     >
       <div className="m-3">
         <header className="flex justify-between items-center">

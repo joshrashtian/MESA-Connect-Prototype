@@ -18,7 +18,7 @@ function App() {
     </nav>
     <div className="flex">
     <Navigation />
-    <div className=" ml-24 w-screen ">
+    <div className=" ml-[70px] w-screen ">
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/signIn" element={<SignIn />}/>

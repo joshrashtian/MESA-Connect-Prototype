@@ -32,12 +32,17 @@ export function convertDate (a, format) {
 }
 
 export class DateCalcuation {
+  
   constructor(date) {
-    this.date = date;
+    this.date = date
   }
 
-  fetchDate() {
-    return `${months[this.date.getMonth()].slice(0, 3)} ${this.date.getDate()}, ${this.date.getFullYear()}`
+  printInfo () {
+    return this.date
+  }
+  fetchDate(type) {
+    if (type === 'long') return `${months[this.date.getMonth()]} ${this.date.getDate()}, ${this.date.getFullYear()}`
+    else return `${months[this.date.getMonth()].slice(0, 3)} ${this.date.getDate()}, ${this.date.getFullYear()}`
   }
 
   fetchTime() {

@@ -7,6 +7,8 @@ import NoPosts from './Social/Profile/NoPosts'
 import LoadingScreen from './LoadingScreen'
 import Post from './Social/Post'
 import Wim from './Social/PostTypes/Wim'
+import { convertDate, refactorName } from './functions'
+import AboutMe from './Social/Profile/AboutMe'
 
 const ProfileScreen = () => {
   const { id } = useParams()
@@ -52,40 +54,52 @@ const ProfileScreen = () => {
   if (loading) return <LoadingScreen />
 
   return (
-    <div className="h-screen">
-      <header className=" m-16 ml-12 flex">
+    <div className="h-screen flex flex-col gap-16">
+      <header className="p-12 pt-20 pb-16 flex rounded-b-[80px] bg-gradient-to-br from-amber-700 to-orange-500 shadow-xl">
         <img
           src={user.photoURL !== null || undefined ? user.photoURL : UserIcon}
           className="h-32 w-32 mr-10 rounded-full bg-white"
         />
 
-        <div>
+        <div className='flex flex-col gap-2'>
           <div className="flex items-center">
-            <h2 className="font-eudoxusbold text-6xl">
+            <h2 className="font-eudoxusbold bg-gradient-to-tr bg-clip-text text-transparent from-white to-slate-300 text-6xl">
               {user.realname !== undefined || null
                 ? user.realname
                 : user.username !== undefined || null
                   ? user.username
                   : null}
             </h2>
-            <h2 className="font-eudoxusbold ml-4 text-red-800 text-3xl">
+            
               {aUser !== null || undefined
                 ? auth.currentUser.uid === id
-                  ? 'Your Account'
+                  ? <h2 className="font-eudoxus ml-4 p-2 px-3 bg-white rounded-full text-red-800 text-xl">Your Account</h2>
                   : null
                 : null}
+            
+          </div>
+          <div className='flex gap-10 justify-between'>
+            <h2 className="font-eudoxus bg-gradient-to-br bg-clip-text text-transparent from-white to-slate-200 text-3xl">
+              {user.username !== undefined || null ? refactorName(user.username)  : null}
+            </h2>
+            <h2 className="font-eudoxus bg-gradient-to-br bg-clip-text text-transparent from-slate-200 to-slate-50 text-3xl">
+              {user.major}
             </h2>
           </div>
-          <h2 className="font-eudoxusbold text-3xl">
-            {user.username !== undefined || null ? user.username : null}
+          <ul className='flex flex-row-reverse justify-between items-center'>
+          <h2 className={` w-48 font-eudoxus text-emerald-600 text-xl shadow-inner bg-white rounded-xl text-center`}>
+            Joined {user.joined !== undefined || null ? `${convertDate(user.joined.toDate(), 'tiny')}` : null}
           </h2>
-          <h2 className={`mt-3 p-1 font-eudoxusbold text-emerald-700 text-xl bg-gray-300 rounded-xl w-[50%] text-center`}>
-            Joined {user.joined !== undefined || null ? `${user.joined.toDate().getMonth() + 1}/${user.joined.toDate().getDate()}/${user.joined.toDate().getFullYear()}` : null}
-          </h2>
+          <p className='text-white text-xl'>{user.bio.length != 0 ? user.bio : 'This user has no bio set.'}</p>
+          </ul>
         </div>
       </header>
-      <section className="flex justify-between gap-2">
-        <section className="ml-10 w-[66%]">
+      <section className="flex justify-between gap-2 mx-8">
+        <section className="ml-10 w-[66%] flex flex-col gap-10">
+          
+          <AboutMe data={user.about ? user.about : null} />
+          
+          <ul>
           <h1 className="font-eudoxusbold text-3xl">Recent Posts</h1>
           <div className="gap-2 flex flex-col mt-5">
             {posts ? posts.length !== 0 ? (
@@ -99,6 +113,7 @@ const ProfileScreen = () => {
               <NoPosts user={user.username} />)
               }
           </div>
+          </ul>
         </section>
         <section className="mr-10 w-[33%] text-right">
           <h1 className="font-eudoxusbold text-3xl">Friends</h1>
