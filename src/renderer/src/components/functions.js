@@ -46,7 +46,8 @@ export class DateCalcuation {
   }
 
   fetchTime() {
-    return `${this.date.getHours()}:${this.date.getMinutes()}`
+    if(this.date.getHours() < 13) return `${this.date.getHours()}:${this.date.getMinutes()} AM`
+    else return `${this.date.getHours() - 12}:${this.date.getMinutes()} PM`
   }
 }
 

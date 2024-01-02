@@ -50,9 +50,9 @@ export const Home = () => {
   if(loading) return <LoadingScreen />
 
   return (
-    <motion.div className=' justify-evenly items-center h-screen no-scrollbar overflow-y-scroll' initial={{opacity: '0%'}} animate={{opacity: '100%'}} >
-      <motion.h1 transition={{delay: 0.4}} initial={{x: -20, opacity: '0%'}} animate={{x: 0, opacity: '100%'}}  className='ml-16 mt-16 mb-8 text-5xl font-eudoxusbold '>{greeting}, {user.realname != null ? user.realname : "guest"}</motion.h1>
-      <section className='mx-6 flex gap-10 justify-center'>
+    <motion.div className='mx-10 justify-evenly items-center h-screen no-scrollbar overflow-y-scroll' initial={{opacity: '0%'}} animate={{opacity: '100%'}} >
+      <motion.h1 transition={{delay: 0.4}} initial={{x: -20, opacity: '0%'}} animate={{x: 0, opacity: '100%'}}  className='mt-16 mb-8 text-5xl font-eudoxusbold '>{greeting}, {user.realname != null ? user.realname : "guest"}</motion.h1>
+      <section className='flex gap-10 justify-center'>
         <div className='w-1/2 h-3/4 bg-white rounded-xl'>
           <div className='justify-center text-center p-5'>
             <h1 className='font-eudoxus text-xl'>News Around MESA</h1>
@@ -64,8 +64,8 @@ export const Home = () => {
           </div>
         </div>
       </section>
-      <h1 className='ml-16 mt-16 mb-8 text-3xl font-eudoxusbold'>Current Events You May Be Interested In</h1>
-      <section className='mx-10'>
+      <section className='mx-5 mt-12 gap-3 flex flex-col'>
+        <h1 className='text-3xl font-eudoxusbold'>Current Events You May Be Interested In</h1>
         <EventPanel />
       </section>
     </motion.div>

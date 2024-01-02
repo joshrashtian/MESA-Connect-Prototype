@@ -1,6 +1,6 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { db } from '../../../../../firebase'
+import { auth, db } from '../../../../../firebase'
 import Post from './Post'
 import { motion, useScroll } from 'framer-motion'
 import LoadingScreen from '../LoadingScreen'
@@ -20,12 +20,13 @@ const Activity = () => {
   
   const getFeed = async () => {
     try {
-      const postsRef = collection(db, 'posts')
+      const postsRef = query(collection(db, 'posts'), orderBy('postTime'))
       const fetchData = await getDocs(postsRef)
       const postData = fetchData.docs.map((doc) => ({
         ...doc.data(),
-        id: doc.id
+        id: doc.id,
       }))
+      postData.reverse()
       setPosts(postData)
       setLoading(false)
     } catch (e) {
@@ -35,7 +36,6 @@ const Activity = () => {
 
   useEffect(() => {  
     getFeed()
-    console.log(posts)
   }, [])
 
   if (loading) return <LoadingScreen />
@@ -54,7 +54,8 @@ const Activity = () => {
         <div className='flex justify-between'>
         <div className="my-1 w-[70%]">
           <section className={`flex w-[100%] ${ menu == 0 ? 'justify-evenly' : null} mb-4 bg-[#BBB] p-3 rounded-xl`}>
-            { menu == 0 ?
+            { !auth.currentUser ? <h1 className='text-white font-eudoxus'>Login / Sign Up in order to create any posts.</h1> : 
+            menu == 0 ?
             <>
             <Link to='/social/create' className=" bg-gradient-to-r from-amber-600 to-amber-500 hover:scale-105 duration-300  w-[45%] rounded-lg shadow-xl py-2">
               <h1 className='text-white font-eudoxus text-center'>Create Post</h1>
@@ -86,12 +87,12 @@ const Activity = () => {
             ) 
           })}
         </div>
-        <section className='w-3/12 bg-slate-500 rounded-xl shadow-lg'>
-          <div className='gap-3 flex flex-col h-[100%] overflow-y-scroll no-scrollbar'>
-          <input className='rounded-2xl mt-4 m-3 p-2 px-4 font-jet' placeholder='Search' />
+        <section className='w-3/12 bg-slate-500 p-1 rounded-xl shadow-lg'>
+          <div className='gap-3 flex flex-col p-3 h-[100%] items-center overflow-y-scroll no-scrollbar'>
+          <input className='rounded-2xl p-2 px-5 w-[100%]  font-jet' placeholder='Search' />
           {
             forums.map(c => (
-              <div className='w-[100%] py-3 cursor-pointer hover:scale-105 justify-center flex bg-slate-500 rounded-lg hover:rounded-lg hover:bg-slate-700 duration-200'>
+              <div className='w-[100%] py-3 cursor-pointer hover:scale-105 justify-center flex bg-slate-500 rounded-full hover:bg-slate-700 duration-200'>
                 <h1 className='text-white font-eudoxusbold'>{c.toUpperCase()}</h1>
               </div>
             ))
