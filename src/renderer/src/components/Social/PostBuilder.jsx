@@ -1,16 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useScroll, motion } from 'framer-motion'
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { addDoc, collection, serverTimestamp, doc, getDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { auth, db } from '../../../../../firebase'
 
 const PostBuilder = () => {
   const [text, setText] = useState()
   const [header, setHeader] = useState()
+  const [role, setRole] = useState()
 
   const nav = useNavigate()
 
   const { scrollYprogress } = useScroll()
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const userRef = doc(db, 'users', auth.currentUser.uid)
+        const got = await getDoc(userRef)
+        setRole(got.data())
+      } catch (e) {
+        alert(e)
+      }
+    }
+    getUser()
+  },  [])
 
   const submitPost = async () => {
     try {

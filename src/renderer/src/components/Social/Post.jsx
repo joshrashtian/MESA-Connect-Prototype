@@ -13,15 +13,12 @@ const Post = ({ post, current, type }) => {
       try {
         const userRef = doc(db, 'users', post.userID)
         const got = await getDoc(userRef)
-        console.log(got.data())
         setUser(got.data())
-        console.log('User: ', user)
         if(user) setLoading(false)
       } catch (e) {
         console.log(e)
       }
     }
-    console.log('Post Data', post, 'Current', current)
     getUser()
   }, [])
 

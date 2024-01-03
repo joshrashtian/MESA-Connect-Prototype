@@ -81,12 +81,14 @@ export const Home = () => {
           </div>
         </div>
       </section>
-      <section className='mx-5 mt-12 gap-3 flex flex-col'>
+      <div>
+      <section className='mx-5 mt-12 w-2/3 gap-3 flex flex-col'>
         <h1 className='text-3xl font-eudoxusbold'>Current Events You May Be Interested In</h1>
         { events?.map(event => {
           return <section onClick={() => {setModal(true); setModalData(event)}}><EventPanel event={event} /></section>
         })}
       </section>
+      </div>
       <EventModal open={modal} data={modalData} setClose={() => {setModal(false)}} />
     </motion.div>
     
