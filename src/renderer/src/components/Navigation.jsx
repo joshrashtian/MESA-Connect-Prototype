@@ -17,6 +17,7 @@ const Navigation = () => {
   useEffect(() => {
     fetchPic()
   }, [])
+  
   console.log(SidebarIcons)
 
   return (

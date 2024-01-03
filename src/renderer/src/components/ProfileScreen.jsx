@@ -34,7 +34,6 @@ const ProfileScreen = () => {
       try {
         const q = query(collection(db, 'posts'), where('userID', '==', id))
         const newData = await getDocs(q)
-        console.log(newData)
         const final = newData.docs.map((e) => ({
           ...e.data(),
           id: e.id

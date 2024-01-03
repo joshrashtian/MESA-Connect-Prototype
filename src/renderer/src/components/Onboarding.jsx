@@ -17,7 +17,6 @@ const Onboarding = () => {
         try {
           const ref = await doc(db, 'users', auth.currentUser.uid)
           const got = await getDoc(ref)
-          console.log(got.data())
           setData(got.data())
         } catch (e) {
           alert(e)

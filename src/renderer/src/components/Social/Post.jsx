@@ -29,7 +29,7 @@ const Post = ({ post, current, type }) => {
 
   return (
     <div
-      className={`${!type ? 'w-[100%]' : 'w-[100%]'} py-0.5 mb-3 rounded-lg hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
+      className={`${!type ? 'w-[100%]' : 'w-[100%]'} py-0.5 mb-3 rounded-xl hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
       key={post.id}
       onContextMenu={e => {e.preventDefault() (<OptionsButton />)}}
     >

@@ -28,7 +28,7 @@ const Wim = ({ wim, update }) => {
 
   return (
     <div
-      className="w-[100%] py-0.5 mb-3 rounded-2xl hover:scale-[1.02] hover:shadow-lg cursor-default bg-gradient-to-tr from-slate-100 to-slate-200 duration-700"
+      className="w-[100%] py-0.5 mb-3 rounded-xl hover:scale-[1.02] hover:shadow-lg cursor-default bg-gradient-to-tr from-slate-100 to-slate-200 duration-700"
       key={wim.id}
     >
       <div className="m-1 ml-3">

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
+import { motion, useDragControls } from 'framer-motion'
 import { DateCalcuation, convertDate } from '../functions'
 import { TimeDefer } from '../time'
 
 const EventModal = ({ open, setClose, data }) => {
-  const [status, setStatus] = useState(false)
 
   if (!open || !data) return null
 
@@ -16,16 +15,17 @@ const EventModal = ({ open, setClose, data }) => {
 
   const timeComp = new TimeDefer(time, time2)
 
+
   return (
-    <motion.div className="flex justify-center items-center bg-black">
-      <div className=" w-3/4 h-2/3 top-[15%] fixed flex-col flex justify-between bg-white rounded-3xl shadow-2xl p-10 ">
+    <div className="flex justify-center items-center bg-black">
+      <motion.div initial={{opacity: '0%'}} animate={{opacity: '100%'}} transition={{duration: 0.2}} className=" w-3/4 h-2/3 top-[15%] fixed flex-col flex justify-between bg-white rounded-3xl shadow-2xl">
         <div
           className=" absolute top-7 right-10 text-gray-400 hover:text-red-800 font-semibold p-2 hover:scale-125 duration-200 cursor-pointer "
           onClick={() => setClose()}
         >
           <h1 className="text-4xl">x</h1>
         </div>
-        <section className='h-full'>
+        <section className='h-full p-10'>
           <h1 className=" font-eudoxusbold text-4xl">{data.title}</h1>
           <div className="p-4 flex h-1/2 justify-center gap-3">
             <ul className="w-1/3 h-full p-3 bg-gradient-to-tl from-slate-100 to-gray-300 hover:scale-105 shadow-sm hover:shadow-lg duration-500 flex flex-col-reverse items-center justify-between rounded-2xl">
@@ -47,8 +47,12 @@ const EventModal = ({ open, setClose, data }) => {
               <p className="font-eudoxus text-xl">{data.location}</p>
             </ul>
           </div>
-        </section>
-        <section className="flex gap-4 justify-center ">
+          <div className="p-4 flex h-4/5 gap-3">
+          <ul className="w-2/3 h-1/2 p-10 bg-gradient-to-tl from-gray-200 to-slate-100 hover:scale-105 shadow-sm hover:shadow-lg duration-500 flex flex-col-reverse items-center justify-between rounded-2xl">
+              <p className="font-eudoxus text-xl">{data.desc}</p>
+            </ul>
+            </div>
+          <section className="flex gap-4 justify-center ">
           {data.tags &&
             data.tags.map((tag) => (
               <div className="bg-slate-100 p-1 px-3 rounded-full">
@@ -56,8 +60,10 @@ const EventModal = ({ open, setClose, data }) => {
               </div>
             ))}
         </section>
-      </div>
-    </motion.div>
+        </section>
+        
+      </motion.div>
+    </div>
   )
 }
 

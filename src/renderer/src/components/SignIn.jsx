@@ -87,7 +87,6 @@ const SignIn = () => {
     setErrorMessage(null)
 
     onAuthStateChanged(auth, (user) => {
-      console.log(user)
       if (!user) { setPage(0) } 
       else if (user.displayName == null) { setPage(2) } 
       else { setPage(1) + setCurrentPic(auth.currentUser.photoURL) }
@@ -121,8 +120,6 @@ const SignIn = () => {
           .finally(() => {
             setPage(1)
           })
-
-        console.log(auth.currentUser.displayName)
       } catch (e) {
         console.log(e)
       }
@@ -135,7 +132,6 @@ const SignIn = () => {
         try {
           const ref = await doc(db, 'users', auth.currentUser.uid)
           const got = await getDoc(ref)
-          console.log(got.data())
           setData(got.data())
         } catch (e) {
           alert(e)

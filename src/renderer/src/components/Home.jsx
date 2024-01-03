@@ -38,7 +38,6 @@ export const Home = () => {
       try {
         const userRef = doc(db, 'users', e)
         const got = await getDoc(userRef)
-        console.log(got.data())
         setUser(got.data())
         setLoading(false)
       } catch (e) {
