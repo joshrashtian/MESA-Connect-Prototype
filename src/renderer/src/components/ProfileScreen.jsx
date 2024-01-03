@@ -55,7 +55,7 @@ const ProfileScreen = () => {
 
   return (
     <div className="h-screen flex flex-col gap-16">
-      <header className="p-12 pt-20 pb-16 flex rounded-br-full bg-gradient-to-b from-[#c76c12] from-75% to-[#8d4111] shadow-xl">
+      <header className="p-12 pt-20 pb-16 flex rounded-br-[120px] bg-gradient-to-b from-[#c76c12] from-75% to-[#8d4111] shadow-xl">
         <img
           src={user.photoURL !== null || undefined ? user.photoURL : UserIcon}
           className="h-32 w-32 mr-10 rounded-full bg-white"
