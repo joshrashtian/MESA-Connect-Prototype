@@ -1,18 +1,22 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react'
 import { auth } from '../../../../firebase'
-import { getDoc, doc } from 'firebase/firestore'
+import { getDoc, doc, collection, getDocs } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { greetings } from './functions'
 import { onAuthStateChanged } from 'firebase/auth'
 import { motion } from 'framer-motion'
 import LoadingScreen from './LoadingScreen'
 import EventPanel from './Events/Event'
+import EventModal from './Events/EventModal'
 
 export const Home = () => {
   const [user, setUser] = useState({realname: null})
   const [greeting, setGreeting] = useState()
   const [loading, setLoading] = useState(true)
+  const [events, setEvents] = useState()
+  const [modal, setModal] = useState(false)
+  const [modalData, setModalData] = useState({})
 
   const currentDate = new Date(Date.now())
 
@@ -42,7 +46,21 @@ export const Home = () => {
       }
     }
     
-    
+    const getEvents = async () => { 
+      try {
+        const eventRef = collection(db, 'events')
+        const events = await getDocs(eventRef)
+        const eventData = events.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
+        setEvents(eventData)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    getEvents()
     setGreeting(currentHour())
     
   }, [])
@@ -66,8 +84,12 @@ export const Home = () => {
       </section>
       <section className='mx-5 mt-12 gap-3 flex flex-col'>
         <h1 className='text-3xl font-eudoxusbold'>Current Events You May Be Interested In</h1>
-        <EventPanel />
+        { events?.map(event => {
+          return <section onClick={() => {setModal(true); setModalData(event)}}><EventPanel event={event} /></section>
+        })}
       </section>
+      <EventModal open={modal} data={modalData} setClose={() => {setModal(false)}} />
     </motion.div>
+    
   )
 }

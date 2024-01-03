@@ -92,7 +92,7 @@ const Activity = () => {
           <input className='rounded-2xl p-2 px-5 w-[100%]  font-jet' placeholder='Search' />
           {
             forums.map(c => (
-              <div className='w-[100%] py-3 cursor-pointer hover:scale-105 justify-center flex bg-slate-500 rounded-full hover:bg-slate-700 duration-200'>
+              <div key={c} className='w-[100%] py-3 cursor-pointer hover:scale-105 justify-center flex bg-slate-500 rounded-full hover:bg-slate-700 duration-200'>
                 <h1 className='text-white font-eudoxusbold'>{c.toUpperCase()}</h1>
               </div>
             ))

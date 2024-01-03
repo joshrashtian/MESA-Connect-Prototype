@@ -8,6 +8,8 @@ import ProfileScreen from "./components/ProfileScreen";
 import Social from "./components/Social";
 import Activity from "./components/Social/Activity";
 import PostBuilder from "./components/Social/PostBuilder";
+import EventsPage from "./components/Events/EventsPage";
+import EventOutlet from "./components/EventOutlet";
 
 function App() {
 
@@ -24,6 +26,10 @@ function App() {
         <Route path="/signIn" element={<SignIn />}/>
         <Route path="/signup" element={<SignUp />}/>
         <Route path="/onboarding" element={<Onboarding />}/>
+        <Route path="/events" element={<EventOutlet />}>
+          <Route path="" element={<EventsPage />}/>
+          <Route path=":id" />
+        </Route>
         <Route path="/social" element={<Social />}>
           <Route path="" element={<Activity />} />
           <Route path='create' element={<PostBuilder />} />
