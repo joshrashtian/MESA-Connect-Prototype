@@ -4,12 +4,15 @@ import { addDoc, collection, serverTimestamp, doc, getDoc } from 'firebase/fires
 import { useNavigate } from 'react-router-dom'
 import { auth, db } from '../../../../../firebase'
 import PostTypeArray from './PostCreator/Types'
+import NewWim from './PostCreator/NewWim'
+import Sumbitting from './PostCreator/Sumbitting'
 
 const PostBuilder = () => {
   const [text, setText] = useState()
   const [header, setHeader] = useState()
   const [role, setRole] = useState()
   const [active, setActive] = useState('Post')
+  const [rendering, setRendering] = useState(false)
 
   const nav = useNavigate()
 
@@ -29,6 +32,8 @@ const PostBuilder = () => {
   },  [])
 
   const submitPost = async () => {
+    setRendering(true)
+    if ( active === 'Post') {
     try {
       const postRef = await addDoc(collection(db, 'posts'), {
         contents: [{text: text}],
@@ -39,6 +44,19 @@ const PostBuilder = () => {
     } catch (e) {
       console.error(e)
     }
+  }
+  if ( active === 'Wim') {
+    try {
+      const postRef = await addDoc(collection(db, 'posts'), {
+        text: text,
+        userID: auth.currentUser.uid,
+        type: 'wim',
+        postTime: serverTimestamp()
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  }
     await nav("/social")
   }
 
@@ -74,17 +92,22 @@ const PostBuilder = () => {
           </div>
         </div>
         }
-        
-        { !text || !header ? null : text.length != 0 ? (
+        { active === 'Wim' && <NewWim exit={() => {nav("/social")}} updateText={e => {setText(e)}} />}
+        { !text || (active != 'Wim' && !header) ? null : text.length != 0 ? (
         <motion.section initial={{y: 20, opacity: '0%'}} animate={{y: 0, opacity: '100%'}} className='h-16 bg-gradient-to-tr from-orange-600 to-orange-400 flex justify-center gap-5 items-center rounded-full shadow-xl absolute bottom-[15%] left-[25%] w-[53%] right-[75%]'>
+          { !rendering ?
+          <>
           <button onClick={submitPost} className='p-2 bg-white hover:bg-orange-500 px-7 rounded-full cursor-pointer hover:scale-110 duration-300 flex justify-center items-center'>
             <h1 className=' font-eudoxusbold text-black'>Submit</h1>
           </button>
           <ul className='p-2 bg-white px-7 text-black hover:bg-red-500 hover:text-white rounded-full cursor-pointer hover:scale-110 duration-300 flex justify-center items-center'>
             <h1 className=' font-eudoxusbold text-black'>Discard Changes</h1>
           </ul>
+          </>
+          : <Sumbitting />}
         </motion.section>
         ) : null}
+        
       </div>
     </div>
   )
