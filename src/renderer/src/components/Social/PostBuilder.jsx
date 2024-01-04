@@ -6,6 +6,7 @@ import { auth, db } from '../../../../../firebase'
 import PostTypeArray from './PostCreator/Types'
 import NewWim from './PostCreator/NewWim'
 import Sumbitting from './PostCreator/Sumbitting'
+import EventCreator from './PostCreator/EventCreator'
 
 const PostBuilder = () => {
   const [text, setText] = useState()
@@ -93,6 +94,7 @@ const PostBuilder = () => {
         </div>
         }
         { active === 'Wim' && <NewWim exit={() => {nav("/social")}} updateText={e => {setText(e)}} />}
+        { active === 'Event' && <EventCreator />}
         { !text || (active != 'Wim' && !header) ? null : text.length != 0 ? (
         <motion.section initial={{y: 20, opacity: '0%'}} animate={{y: 0, opacity: '100%'}} className='h-16 bg-gradient-to-tr from-orange-600 to-orange-400 flex justify-center gap-5 items-center rounded-full shadow-xl absolute bottom-[15%] left-[25%] w-[53%] right-[75%]'>
           { !rendering ?
