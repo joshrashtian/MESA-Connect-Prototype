@@ -3,11 +3,13 @@ import { useScroll, motion } from 'framer-motion'
 import { addDoc, collection, serverTimestamp, doc, getDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import { auth, db } from '../../../../../firebase'
+import PostTypeArray from './PostCreator/Types'
 
 const PostBuilder = () => {
   const [text, setText] = useState()
   const [header, setHeader] = useState()
   const [role, setRole] = useState()
+  const [active, setActive] = useState('Post')
 
   const nav = useNavigate()
 
@@ -44,8 +46,10 @@ const PostBuilder = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="w-4/5 h-4/5 bg-[#EEE] rounded-2xl shadow-2xl p-12 pb-36">
         <h1 className="font-eudoxusbold text-6xl mb-2">Post Lab</h1>
-        <div className="flex flex-row-reverse h-[100%] w-[100%]">
-          <div className="overflow-y-scroll no-scrollbar  w-[98%] h-full px-28 align-top">
+        <PostTypeArray category={(e) => {setActive(e)}} />
+        { active === 'Post' &&
+          <div className="flex flex-row-reverse h-[100%] w-[100%]">
+          <div className="overflow-y-scroll no-scrollbar  w-[98%] h-[95%] p-6 px-28 align-top">
             <input
               onChange={e => setHeader(e.target.value)}
               maxLength="65"
@@ -57,7 +61,7 @@ const PostBuilder = () => {
               className="h-[50%] font-eudoxus focus:outline-none w-full bg-gradient-to-tr from-white to-slate-100 rounded-xl text-left p-3"
               placeholder="Text..."
             />
-            {!text ? null : text.length != 0 ? (
+            {text && text.length != 0 ? (
               <motion.div
                 className="bg-[#ddd] flex gap-10 p-3 justify-center"
                 initial={{ opacity: '0%', y: -20 }}
@@ -69,8 +73,10 @@ const PostBuilder = () => {
             ) : null}
           </div>
         </div>
+        }
+        
         { !text || !header ? null : text.length != 0 ? (
-        <motion.section initial={{y: 20, opacity: '0%'}} animate={{y: 0, opacity: '100%'}} className='h-16 bg-gradient-to-tr from-orange-600 to-orange-400 flex justify-center gap-5 items-center rounded-full shadow-xl'>
+        <motion.section initial={{y: 20, opacity: '0%'}} animate={{y: 0, opacity: '100%'}} className='h-16 bg-gradient-to-tr from-orange-600 to-orange-400 flex justify-center gap-5 items-center rounded-full shadow-xl absolute bottom-[15%] left-[25%] w-[53%] right-[75%]'>
           <button onClick={submitPost} className='p-2 bg-white hover:bg-orange-500 px-7 rounded-full cursor-pointer hover:scale-110 duration-300 flex justify-center items-center'>
             <h1 className=' font-eudoxusbold text-black'>Submit</h1>
           </button>
