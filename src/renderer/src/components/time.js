@@ -39,7 +39,6 @@ export class TimeDefer {
         let minDifference;
         if (this.one.getMinutes() > this.two.getMinutes()) { 
             minDifference = ((this.two.getMinutes() + 60) - this.one.getMinutes())
-            hourDifference--
         }
         else { minDifference = this.two.getMinutes() - this.one.getMinutes() }
         return `${minDifference < 10 ? `0${minDifference}` : minDifference }`
