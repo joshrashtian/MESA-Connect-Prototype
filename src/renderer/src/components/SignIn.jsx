@@ -190,9 +190,9 @@ const SignIn = () => {
     return (
       <div>
         <div className="h-screen flex items-center justify-center ">
-          <div className="bg-[#EEEEEE] w-4/5 h-3/5 rounded-2xl shadow-xl ">
-            <h1 className="font-bold text-6xl m-5 font-eudoxusbold">Account Details</h1>
-            <div className="flex m-5 justify-between items-center bg-stone-200 p-2 rounded-lg">
+          <div className="bg-[#EEEEEE] w-4/5 h-3/5 rounded-2xl shadow-xl p-10">
+            <h1 className="font-bold text-6xl font-eudoxusbold">Account Details</h1>
+            <div className="flex my-4 justify-between items-center bg-stone-200 p-2 rounded-lg">
               <div className="flex items-center gap-2">
                 <input
                   type="file"
@@ -228,22 +228,22 @@ const SignIn = () => {
             {data === undefined ? (
               <div className="bg-red-200 mx-5 p-2 my-10 rounded-lg">Missing Data?</div>
             ) : null}
-            <div className="justify-center items-center flex-col md:flex-row flex mx-5 gap-2 text-center">
+            <div className="justify-center flex-col flex gap-1 text-center">
               <Link
                 to={'/Onboarding'}
-                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 w-5/6 lg:px-20 2xl:px-30 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                className=" bg-orange-600 font-eudoxus text-lg hover:bg-orange-700 text-white p-3 w-1/3 rounded-full duration-500"
               >
                 Edit Profile Details
               </Link>
               <Link
                 to={`/social/${auth.currentUser.uid}`}
-                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 w-5/6 lg:px-20 2xl:px-30 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                className=" bg-orange-600 font-eudoxus text-lg hover:bg-orange-700 text-white p-3 w-1/3 rounded-full duration-500"
               >
                 View Profile
               </Link>
               <button
                 onClick={signout}
-                className=" bg-amber-900 font-eudoxus hover:bg-amber-700 text-white p-2 w-5/6 lg:px-20 hover:scale-110 rounded-2xl hover:rounded-xl duration-500"
+                className=" bg-orange-600 font-eudoxus text-lg hover:bg-orange-700 text-white p-3 w-1/3 rounded-full duration-500"
               >
                 Sign Out
               </button>

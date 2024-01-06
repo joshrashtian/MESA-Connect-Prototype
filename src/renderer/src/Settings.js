@@ -7,4 +7,4 @@ class Settings {
 
 }
 
-export const settings = new Settings('ENG', 'light')
+export default globalSettings = new Settings('ENG', 'light')

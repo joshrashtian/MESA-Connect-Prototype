@@ -57,7 +57,7 @@ const EventCreator = () => {
     await nav("/social")
   }
   return (
-    <motion.div className="flex flex-col gap-4">
+    <motion.div className="flex flex-col gap-4 overflow-y-scroll no-scrollbar h-[90%]">
       <section className="flex flex-col gap-4 mt-5">
         <input
           onChange={(e) => setTitle(e.target.value)}

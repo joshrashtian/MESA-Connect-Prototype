@@ -10,6 +10,7 @@ import Activity from "./components/Social/Activity";
 import PostBuilder from "./components/Social/PostBuilder";
 import EventsPage from "./components/Events/EventsPage";
 import EventOutlet from "./components/EventOutlet";
+import Settings from "./components/Settings";
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='create' element={<PostBuilder />} />
           <Route path=":id" element={<ProfileScreen />}/>
         </Route>
+        <Route path="/settings" element={<Settings />}/>
         {/*<Route path="/news" element={<News />}/> */}
       </Routes>
       </div>
