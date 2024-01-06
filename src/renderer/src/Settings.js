@@ -5,6 +5,10 @@ class Settings {
         this.mode = mode;
     }
 
+    getData() {
+        return {lang: this.lang, mode: this.mode }
+    }
+
 }
 
-export default globalSettings = new Settings('ENG', 'light')
+export const globalSettings = new Settings('ENG', 'light')

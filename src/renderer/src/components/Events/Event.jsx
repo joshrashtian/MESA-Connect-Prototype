@@ -32,7 +32,7 @@ const EventPanel = ({ event }) => {
           <p className="font-jet text-slate-500">
             Time: {date.fetchTime()} - {date2.fetchTime()}
           </p>
-          <p className="font-jet text-slate-500">Location: {event.location}</p>
+          <p className="font-jet text-slate-500">{ !event.type || event.type === 'reg' ? `Location: ${event.location}` : `Remote`}</p>
         </ul>
       </ul>
     </div>

@@ -47,7 +47,7 @@ const EventModal = ({ open, setClose, data }) => {
               </ul>
             </ul>
             <ul className="w-1/3 h-full p-3 bg-gradient-to-tl from-gray-200 to-slate-100 hover:scale-105 shadow-sm hover:shadow-lg duration-500 flex flex-col-reverse items-center justify-between rounded-2xl">
-              <p className="font-eudoxus text-xl">{data.location}</p>
+              <p className="font-eudoxus text-xl">{!data.type || data.type === 'reg' ? data.location : <a href={data.location} >Zoom Meeting Link</a>}</p>
             </ul>
           </div>
           <div className="p-4 flex h-4/5 gap-3">

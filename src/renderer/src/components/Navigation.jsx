@@ -16,8 +16,11 @@ const Navigation = () => {
   }
 
   useEffect(() => {
-    fetchPic()
-  }, [])
+    onAuthStateChanged(auth, (user) => {
+      if(user) {setProf(user.photoURL)}
+      else {setProf(UserIcon); setLoading(false)}
+    })
+  }, [auth])
   
   console.log(SidebarIcons)
 

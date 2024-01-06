@@ -7,7 +7,7 @@ import {
   signOut,
   updateProfile
 } from 'firebase/auth'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { auth, storage, userdb } from '../../../../firebase'
 import { refactorName } from './functions'
 import { db } from '../../../../firebase'
@@ -81,7 +81,28 @@ const SignIn = () => {
     }
   }
 
-  const fileUpload = () => {}
+  const nav = useNavigate()
+
+  const menu = [
+    {
+      name: 'Edit Profile Details',
+      func: function() {
+        nav('/Onboarding')
+      }
+    },
+    {
+      name: 'View Profile',
+      func: function() {
+        nav(`/social/${auth.currentUser.uid}`)
+      }
+    },
+    {
+      name: 'Sign Out',
+      func: function() {
+        signout
+      }
+    }
+  ]
 
   useEffect(() => {
     setErrorMessage(null)
@@ -228,26 +249,25 @@ const SignIn = () => {
             {data === undefined ? (
               <div className="bg-red-200 mx-5 p-2 my-10 rounded-lg">Missing Data?</div>
             ) : null}
-            <div className="justify-center flex-col flex gap-1 text-center">
-              <Link
-                to={'/Onboarding'}
-                className=" bg-orange-600 font-eudoxus text-lg hover:bg-orange-700 text-white p-3 w-1/3 rounded-full duration-500"
-              >
-                Edit Profile Details
-              </Link>
-              <Link
-                to={`/social/${auth.currentUser.uid}`}
-                className=" bg-orange-600 font-eudoxus text-lg hover:bg-orange-700 text-white p-3 w-1/3 rounded-full duration-500"
-              >
-                View Profile
-              </Link>
-              <button
-                onClick={signout}
-                className=" bg-orange-600 font-eudoxus text-lg hover:bg-orange-700 text-white p-3 w-1/3 rounded-full duration-500"
-              >
-                Sign Out
-              </button>
+            <section className='flex gap-3'>
+            <div className="justify-center cursor-pointer flex-col flex gap-1 w-1/3 text-center">
+              {
+                menu.map(e => {
+                  return (
+                  <div onClick={e.func} className=" bg-orange-600 font-eudoxus text-lg hover:bg-orange-700 text-white p-3 w-full rounded-full duration-500">
+                    {e.name}
+                  </div>
+                  )
+                })
+              }
             </div>
+            <div className='p-4 justify-between cursor-pointer flex flex-col w-1/3 bg-orange-400 hover:bg-orange-600 duration-500 hover:scale-105 rounded-3xl'>
+              <h1 className='text-2xl text-white font-eudoxus'>
+                There is still more to learn about you...
+              </h1>
+              <h2 className='text-6xl font-jet text-right text-white'>{`>`}</h2>
+            </div>
+            </section>
           </div>
         </div>
       </div>

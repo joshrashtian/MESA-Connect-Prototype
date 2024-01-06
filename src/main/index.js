@@ -6,6 +6,7 @@ import icon from '../../resources/MesaIcon.png'
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    title: 'MESA Connect',
     width: 1200,
     height: 900,
     show: false,
