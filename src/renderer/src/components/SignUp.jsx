@@ -26,8 +26,6 @@ const SignUp = () => {
                 bio: '',
                 email: cred.user.email,
                 realname: realname,
-                talents: [],
-                classes: [{}],
                 major: 'TBA',
                 joined: serverTimestamp(),
               })
