@@ -17,7 +17,7 @@ const Onboarding = () => {
   const [lastname, setlastname] = useState('')
   const [bio, setbio] = useState('')
   const [major, setmajor] = useState('')
-  const [ current, setcurrent] = useState(0)
+  const [current, setcurrent] = useState(0)
 
   const options = [
     {
@@ -29,7 +29,7 @@ const Onboarding = () => {
       comp: function () {
         return <h1>Hello!</h1>
       },
-      length: 1,
+      length: 4
     },
     {
       title: 'Set Up Talents and Interests',
@@ -37,9 +37,16 @@ const Onboarding = () => {
         return data?.talents?.length > 0
       },
       comp: function ({ change, selected }) {
-        return <PFP nextSlide={() => {change()}} current={selected} />
+        return (
+          <PFP
+            nextSlide={() => {
+              change()
+            }}
+            current={selected}
+          />
+        )
       },
-      length: 1,
+      length: 1
     },
     {
       title: 'Set Up Profile Picture',
@@ -48,10 +55,15 @@ const Onboarding = () => {
       },
       comp: function ({ change, selected }) {
         return (
-          <PFP nextSlide={() => {change()}} current={selected} />
+          <PFP
+            nextSlide={() => {
+              change()
+            }}
+            current={selected}
+          />
         )
       },
-      length: 2,
+      length: 2
     }
   ]
 
@@ -101,55 +113,88 @@ const Onboarding = () => {
       transition={{ delay: 0.2, duration: 1 }}
       className="h-screen flex flex-col justify-center p-14 duration-300 overflow-y-scroll no-scrollbar"
     >
-      <motion.h1
+      <motion.ul
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, delay: 1.3 }}
-        className="text-white absolute top-16 font-eudoxusbold text-6xl"
+        className="flex justify-between items-center absolute w-5/6 top-16 "
       >
-        Learning Lab
-      </motion.h1>
-      <motion.section className="h-2/3 rounded-3xl gap-4 flex flex-col ">
-        {options.map((e) => {
+        <motion.h1 className="text-white  font-eudoxusbold text-6xl">
+          Learning Lab
+        </motion.h1>
+        <div>
+          <motion.img
+            src={auth.currentUser?.photoURL ? auth.currentUser.photoURL : Education}
+            className="w-16 h-16 rounded-full"
+          />
+        </div>
+      </motion.ul>
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.8, duration: 1 }}
+        className="h-2/3 rounded-3xl gap-2 flex flex-col bg-orange-500 "
+      >
+        {!selected && (
+          <h1 className="text-white m-5 mb-2 font-jet text-xl capitalize">
+            LET'S LEARN ABOUT YOU ---------{' '}
+          </h1>
+        )}
+        {options.map((e, i) => {
           if (selected) {
             if (e.title === selected) {
               let length = e.length
-              
-              if(current === length) {
+
+              if (current === length) {
                 setSelected()
                 setcurrent(0)
+                fetchInformation()
               }
 
               return (
-                <section className="bg-white h-full flex flex-col justify-between rounded-3xl p-10">
+                <motion.section
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="bg-white h-full flex flex-col justify-between rounded-3xl p-10"
+                >
                   <div>
-                  <e.comp selected={current} change={() => {setcurrent(current + 1)}} />
+                    <e.comp
+                      selected={current}
+                      change={() => {
+                        setcurrent(current + 1)
+                      }}
+                    />
                   </div>
-                  <div className='flex justify-center gap-2'>
-                  {
-                    Array.from(Array(length)).map((e, index) =>  (
-                      <div className={`w-3 h-3 rounded-full ${index === current ? 'bg-orange-500' : "bg-gray-600" } `} />
-                    ))
-                  }
+                  <div className="flex justify-center gap-2">
+                    {Array.from(Array(length)).map((e, index) => (
+                      <div
+                        key={index}
+                        className={`w-3 h-3 rounded-full duration-300 ${
+                          index === current ? 'bg-orange-500' : 'bg-gray-600'
+                        } `}
+                      />
+                    ))}
                   </div>
-                </section>
+                </motion.section>
               )
-            }
-
-            else return null
+            } else return null
           }
 
           if (e.prereq() === false)
             return (
-              <ul
+              <motion.ul
+                key={e.title}
                 onClick={() => {
                   setSelected(e.title)
                 }}
-                className="p-3 bg-white w-2/3 h-1/6 rounded-full gap-5 cursor-pointer hover:scale-105 duration-300 flex items-center justify-center"
+                initial={{ x: -10 * (i % 2), opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.1 * i + 2.5, duration: 0.5 }}
+                className="ml-5 p-1 bg-white hover:bg-slate-100 w-[40%] h-16 rounded-xl gap-5 cursor-pointer hover:scale-110 duration-300 flex items-center justify-center"
               >
-                {e.icon && <img src={e.icon} className="w-14" />}
-                <h1 className="text-black text-3xl font-eudoxus">{e.title}</h1>
-              </ul>
+                {e.icon && <img src={e.icon} className="w-12" />}
+                <h1 className="text-black text-2xl font-eudoxus">{e.title}</h1>
+              </motion.ul>
             )
         })}
       </motion.section>

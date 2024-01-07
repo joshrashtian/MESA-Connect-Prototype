@@ -99,7 +99,7 @@ const SignIn = () => {
     {
       name: 'Sign Out',
       func: function() {
-        signout
+        signout()
       }
     }
   ]
