@@ -51,6 +51,26 @@ export class DateCalcuation {
   }
 }
 
+export async function checkEvents(e) {
+  let date = new Date(Date.now())
+  let day = date.getDate()
+  let month = date.getMonth()
+
+  let event = e.eventData
+
+  event.map((a) => {
+    let eDate = a.start.toDate().getDate()
+    let eMonth = a.start.toDate().getMonth()
+
+    if(day > eDate && month >= eMonth) {
+      try {
+        deleteDoc(doc(db, 'events', a.id))
+      } catch (e) {
+        alert(e)
+      }
+    }
+  })
+}
 export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 export const greetings = ['Good evening', 'Good morning', 'Good afternoon' ]

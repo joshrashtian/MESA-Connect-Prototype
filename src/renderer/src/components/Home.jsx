@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react'
 import { auth } from '../../../../firebase'
-import { getDoc, doc, collection, getDocs } from 'firebase/firestore'
+import { getDoc, doc, collection, getDocs, query, orderBy } from 'firebase/firestore'
 import { db } from '../../../../firebase'
-import { greetings } from './functions'
+import { checkEvents, greetings } from './functions'
 import { onAuthStateChanged } from 'firebase/auth'
 import { motion } from 'framer-motion'
 import LoadingScreen from './LoadingScreen'
@@ -47,13 +47,14 @@ export const Home = () => {
     
     const getEvents = async () => { 
       try {
-        const eventRef = collection(db, 'events')
+        const eventRef = query(collection(db, 'events'), orderBy('start'))
         const events = await getDocs(eventRef)
         const eventData = events.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }))
         setEvents(eventData)
+        checkEvents({eventData})
       } catch (e) {
         console.error(e)
       }
