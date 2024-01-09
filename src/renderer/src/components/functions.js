@@ -71,6 +71,24 @@ export async function checkEvents(e) {
     }
   })
 }
+
+export function shuffle(array) {
+  //Fisher-Yates Shuffle
+  let currentIndex = array.length,  
+  randomIndex;
+
+  while (currentIndex > 0) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
 export const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 export const greetings = ['Good evening', 'Good morning', 'Good afternoon' ]
@@ -136,3 +154,26 @@ export const majors = [
   'Theatre',
   'Water',
   'Welding',]
+
+  export const interests = [
+    {
+      title: 'Programming',
+      majors: ['Computer Science', 'Computer Applications & Web Technologies', 'Software Engineering', 'Electronic Systems', 'Engineering', 'Mathematics', 'Physics']
+    },
+    {
+      title: 'Video Games',
+      majors: ['Computer Science', 'Graphic and Multimedia Design', 'Media Entertainment Arts', 'Art']
+    },
+    {
+      title: 'Cars',
+      majors: ['Physics', 'Welding', 'Engineering', 'Automotive']
+    },
+    {
+      title: 'Racing',
+      majors: ['Physics', 'Welding', 'Automotive']
+    },
+    {
+      title: 'Social Situations',
+      majors: ['Sociology', 'Psychology', 'English', 'Political Science'],
+    },
+  ]

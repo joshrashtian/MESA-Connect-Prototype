@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Education from '../assets/icons/EducationIcon.png'
 import PFP from './LearningLab/PFP'
 import LoadingScreen from './LoadingScreen'
+import Talents from './LearningLab/Talents'
 
 const Onboarding = () => {
   const [data, setData] = useState({})
@@ -32,21 +33,22 @@ const Onboarding = () => {
       length: 4
     },
     {
-      title: 'Set Up Talents and Interests',
+      title: 'Talents, Interests and Majors',
       prereq: function () {
         return data?.talents?.length > 0
       },
       comp: function ({ change, selected }) {
         return (
-          <PFP
+          <Talents
             nextSlide={() => {
               change()
             }}
             current={selected}
+            previousSlide={() => { setcurrent(current - 1)}}
           />
         )
       },
-      length: 1
+      length: 3
     },
     {
       title: 'Set Up Profile Picture',
