@@ -176,4 +176,10 @@ export const majors = [
       title: 'Social Situations',
       majors: ['Sociology', 'Psychology', 'English', 'Political Science'],
     },
+    {
+      title: 'Math',
+      majors: ['Mathematics']
+    }
   ]
+
+  export const allTalents = ['Premiere Pro', 'VS Code', 'Sottering']

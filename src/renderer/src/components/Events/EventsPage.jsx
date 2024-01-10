@@ -3,10 +3,13 @@ import { getDoc, doc, collection, getDocs, query, orderBy } from 'firebase/fires
 import { db } from '../../../../../firebase'
 import { EventPanel, EventSmallPanel } from './Event'
 import LoadingScreen from '../LoadingScreen'
+import EventModal from './EventModal'
 
 const EventsPage = () => {
   const [events, setEvents] = useState([{}])
   const [loading, setLoading] = useState(true)
+  const [ modal, setModal ] = useState(false)
+  const [ modalData, setModalData] = useState({})
 
   useEffect(() => {
     const getEvents = async () => {
@@ -36,10 +39,11 @@ const EventsPage = () => {
         <h2 className="font-eudoxus text-4xl">Featured</h2>
         <ul className="flex whitespace-nowrap gap-2 mt-2 overflow-x-auto no-scrollbar">
           {events.map((event) => (
-            <EventSmallPanel event={event} />
+            <div onClick={() => {setModalData(event); setModal(true)}}><EventSmallPanel event={event} /></div>
           ))}
         </ul>
       </section>
+      <EventModal open={modal} data={modalData} setClose={() => {setModal(false)}} />
     </div>
   )
 }

@@ -10,7 +10,6 @@ const NextButton = ({
   conditionStyle,
   conditionStyleText
 }) => {
-  console.log(condition)
   return (
     <div
       onClick={condition === true || condition === undefined ? onPress : null}

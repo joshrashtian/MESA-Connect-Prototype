@@ -53,8 +53,10 @@ export const Home = () => {
           ...doc.data(),
           id: doc.id,
         }))
-        setEvents(eventData.slice(0, 3))
+        setEvents(eventData)
+        
         checkEvents({eventData})
+        await sortEvents(eventData)
       } catch (e) {
         console.error(e)
       }
@@ -64,6 +66,17 @@ export const Home = () => {
     setGreeting(currentHour())
     
   }, [])
+
+  const sortEvents = async (a) => {
+    let filteredEvents = [...a]
+    
+    if (!user.interests) {setEvents(a.slice(0, 2)); return} 
+    let interests = user.interests
+
+    filteredEvents.map(() => {
+
+    })
+  }
 
   if(loading) return <LoadingScreen />
 

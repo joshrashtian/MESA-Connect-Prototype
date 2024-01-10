@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DateCalcuation, convertDate } from '../functions'
 import { TimeDefer } from '../time'
+import EventModal from './EventModal'
 
 const EventPanel = ({ event }) => {
 
@@ -40,6 +41,7 @@ const EventPanel = ({ event }) => {
 }
 
 const EventSmallPanel = ({ event }) => {
+
   const time = new Date(event.start.toDate())
   const time2 = new Date(event.end.toDate())
 
@@ -51,7 +53,7 @@ const EventSmallPanel = ({ event }) => {
   //const sampleTime = new DateCalcuation(startTime)
 
   return (
-    <div className=" w-3/5 h-30 p-5 cursor-pointer hover:scale-[1.02] duration-200 bg-white hover:bg-slate-100 rounded-2xl">
+    <div className=" h-30 p-5 cursor-pointer hover:scale-[1.02] duration-200 bg-white hover:bg-slate-100 rounded-2xl">
       <ul className="w-[100%] flex-col flex ">
         <li className=" flex justify-between ">
           <h1 className=" font-eudoxusbold text-xl">{event.title}</h1>
