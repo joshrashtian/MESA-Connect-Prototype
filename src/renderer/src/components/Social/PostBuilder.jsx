@@ -14,6 +14,8 @@ const PostBuilder = () => {
   const [role, setRole] = useState()
   const [active, setActive] = useState('Post')
   const [rendering, setRendering] = useState(false)
+  const [tags, setTags] = useState([])
+  const [tagInput, setTagInput] = useState()
 
   const nav = useNavigate()
 
@@ -52,13 +54,21 @@ const PostBuilder = () => {
         text: text,
         userID: auth.currentUser.uid,
         type: 'wim',
-        postTime: serverTimestamp()
+        postTime: serverTimestamp(),
+        tags: [...tags]
       })
     } catch (e) {
       console.error(e)
     }
   }
     await nav("/social")
+  }
+
+  const deleteTag = (e) => {
+    console.log(e)
+    let copy = [...tags]
+    copy.splice(e, 1)
+    setTags(copy)
   }
 
   return (
@@ -90,6 +100,35 @@ const PostBuilder = () => {
                 <h1 className="font-jet text-slate-600">Word Count: {text.split(' ').length}</h1>
               </motion.div>
             ) : null}
+            <ul className="flex gap-2 items-center">
+          <input
+            className="p-2 px-10 w-1/2 font-eudoxus text-slate-500 bg-gray-50 shadow-sm rounded-full"
+            onChange={(e) => setTagInput(e.target.value)}
+          />
+          <p
+            onClick={() => {
+              setTags([...tags, tagInput]);
+              setTagInput('')
+            }}
+            className="font-eudoxus cursor-pointer p-2 px-6 bg-orange-500 hover:bg-orange-700 duration-300 text-white rounded-full"
+          >
+            Submit
+          </p>
+        </ul>
+        <ul className="flex gap-3">
+          {tags &&
+            tags.map((e, index) => (
+              <div
+                onClick={() => {
+                  deleteTag(index)
+                }}
+                key={index}
+                className="p-2 px-6 rounded-full cursor-pointer bg-slate-400 hover:bg-slate-700 duration-300"
+              >
+                <h1 className="text-white font-eudoxus">{e}</h1>
+              </div>
+            ))}
+        </ul>
           </div>
         </div>
         }

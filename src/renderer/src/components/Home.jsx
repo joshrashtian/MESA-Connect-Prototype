@@ -7,7 +7,7 @@ import { checkEvents, greetings } from './functions'
 import { onAuthStateChanged } from 'firebase/auth'
 import { motion } from 'framer-motion'
 import LoadingScreen from './LoadingScreen'
-import EventPanel from './Events/Event'
+import { EventPanel } from './Events/Event'
 import EventModal from './Events/EventModal'
 
 export const Home = () => {
@@ -53,7 +53,7 @@ export const Home = () => {
           ...doc.data(),
           id: doc.id,
         }))
-        setEvents(eventData)
+        setEvents(eventData.slice(0, 3))
         checkEvents({eventData})
       } catch (e) {
         console.error(e)

@@ -11,6 +11,7 @@ import PostBuilder from "./components/Social/PostBuilder";
 import EventsPage from "./components/Events/EventsPage";
 import EventOutlet from "./components/EventOutlet";
 import Settings from "./components/Settings";
+import FullPost from "./components/Social/FullPost";
 
 function App() {
 

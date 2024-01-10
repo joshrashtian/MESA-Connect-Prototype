@@ -39,4 +39,31 @@ const EventPanel = ({ event }) => {
   )
 }
 
-export default EventPanel
+const EventSmallPanel = ({ event }) => {
+  const time = new Date(event.start.toDate())
+  const time2 = new Date(event.end.toDate())
+
+  const date = new DateCalcuation(time)
+  const date2 = new DateCalcuation(time2)
+
+  const timeComp = new TimeDefer(date, date2)
+
+  //const sampleTime = new DateCalcuation(startTime)
+
+  return (
+    <div className=" w-3/5 h-30 p-5 cursor-pointer hover:scale-[1.02] duration-200 bg-white hover:bg-slate-100 rounded-2xl">
+      <ul className="w-[100%] flex-col flex ">
+        <li className=" flex justify-between ">
+          <h1 className=" font-eudoxusbold text-xl">{event.title}</h1>
+        </li>
+        <h1 className="font-eudoxus"></h1>
+        <ul className="p-2 px-4 bg-slate-50 w-full rounded-xl flex gap-12 justify-between">
+          <p className="font-jet text-slate-500"> { !event.type || event.type === 'reg' ? `${event.location}` : `Remote`}</p>
+          <p className="font-jet text-slate-500">{date.fetchDate('short')} </p>
+        </ul>
+      </ul>
+    </div>
+  )
+}
+
+export { EventPanel, EventSmallPanel }
