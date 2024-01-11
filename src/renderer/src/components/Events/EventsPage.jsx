@@ -21,7 +21,7 @@ const EventsPage = () => {
           id: doc.id
         }))
         setEvents(eventData)
-        setLoading(false)
+        await setLoading(false)
       } catch (e) {
         console.error(e)
       }
@@ -34,14 +34,15 @@ const EventsPage = () => {
 
   return (
     <div className="h-screen overflow-y-scroll no-scrollbar">
-      <h1 className="m-16 font-eudoxusbold text-6xl">Events</h1>
-      <section className="absolute left-[12%] w-[76%]   ">
-        <h2 className="font-eudoxus text-4xl">Featured</h2>
+      <h1 className="m-16 font-eudoxusbold text-6xl">What's Going On At MESA</h1>
+      <section className="absolute left-[12%] w-[76%] flex flex-col gap-4   ">
+        <h2 className="font-eudoxusbold text-4xl bg-gradient-to-tr from-slate-500 to-orange-700 bg-clip-text text-transparent inline-block">Upcoming Events</h2>
         <ul className="flex whitespace-nowrap gap-2 mt-2 overflow-x-auto no-scrollbar">
           {events.map((event) => (
             <div onClick={() => {setModalData(event); setModal(true)}}><EventSmallPanel event={event} /></div>
           ))}
         </ul>
+        <h2 className="font-eudoxusbold text-4xl bg-gradient-to-tr from-slate-500 to-orange-700 bg-clip-text text-transparent inline-block">Annoucements</h2>
       </section>
       <EventModal open={modal} data={modalData} setClose={() => {setModal(false)}} />
     </div>

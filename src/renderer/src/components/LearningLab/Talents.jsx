@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import NextButton from './NextButton'
 import { allTalents, interests, majors, shuffle } from '../functions'
+import { auth, db } from '../../../../../firebase'
+import Sumbitting from '../Social/PostCreator/Sumbitting'
+import { doc, setDoc } from 'firebase/firestore'
 
 const Talents = ({ nextSlide, current, previousSlide }) => {
     const [talents, setTalents] = useState([])
@@ -8,7 +11,9 @@ const Talents = ({ nextSlide, current, previousSlide }) => {
     const [talentsOptions, setTalentOptions] = useState([])
     const [intOptions, setIntOptions] = useState([])
     const [userInterests, setUserInterests] = useState([])
+    const [submitting, setSubmitting] = useState(false)
 
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
 
         let a = majors
@@ -17,7 +22,10 @@ const Talents = ({ nextSlide, current, previousSlide }) => {
         setmajOptions(a.sort())
         setTalents(b)
         displayInterests()
-    
+      
+        if(current === 2){
+
+        }
     }, [])
 
     const displayInterests = () => {
@@ -28,6 +36,19 @@ const Talents = ({ nextSlide, current, previousSlide }) => {
       i = i.slice(0, 7)
 
       setIntOptions(i)
+    }
+
+    const changeTalentsToUser = async () => {
+      setSubmitting(true)
+      try{
+      const ref = doc(db, 'users', auth.currentUser.uid)
+      setDoc(ref, { interests: [...userInterests],talents: [...talentsOptions] }, { merge: true })
+      setSubmitting(false)
+      nextSlide()
+    } catch (err) {
+        console.error(err)
+        setSubmitting(false)
+      }
     }
 
     const addInterest = async (i) => {
@@ -143,13 +164,15 @@ const Talents = ({ nextSlide, current, previousSlide }) => {
             </ul>
             }
             <ul className='flex gap-2 justify-center mt-4 items-center'>
+            { !submitting ?
+            <>
             <NextButton
               text={''}
               conditionStyle={'bg-gray-300'}
-              condition={userInterests.length > 2}
+              condition={userInterests.length > 2 && talentsOptions.length > 1}
               textStyle={'text-xl'}
               onPress={() => {
-                nextSlide()
+                changeTalentsToUser()
               }}
             />
             <NextButton
@@ -160,6 +183,8 @@ const Talents = ({ nextSlide, current, previousSlide }) => {
                 previousSlide()
               }}
             />
+            </>
+            : <div><Sumbitting /></div>}
             </ul>
         </section>
       </>
@@ -167,28 +192,17 @@ const Talents = ({ nextSlide, current, previousSlide }) => {
     if (current === 2)
     return (
       <>
-        <h1 className=" font-eudoxusbold text-3xl">First off, let's pick your Interests</h1>
-        <p className="font-eudoxus mt-3">Before we pick your major, let's see what interests you.</p>
+        <h1 className=" font-eudoxusbold text-3xl">Interests and Talents Selected!</h1>
+        <p className="font-eudoxus mt-3">You now have interests and talents set up on your profile!</p>
         <section className="flex flex-col justify-between">
-          <ul className='flex gap-3'>
-            { 
-                userInterests.map(interest => {
-                  if(!interest.title) return
-                  return (
-
-                    <div onClick={() => {removeInterest(interest)}} className='p-2 bg-slate-300 hover:bg-slate-400 cursor-pointer duration-300 rounded-full'>
-                        <h1 className=' font-eudoxus'>{interest.title}</h1>
-                    </div>
-                )})
-            }
-            </ul>
+          
             <ul className='flex gap-2 justify-center mt-4 items-center'>
             <NextButton
               text={'Exit'}
               conditionStyle={'bg-gray-300'}
               textStyle={'text-xl'}
               onPress={() => {
-                previousSlide()
+                next()
               }}
             />
             </ul>

@@ -8,7 +8,18 @@ const OptionsButton = ({ post, isOwner, update }) => {
   const [mode, setMode] = useState(0)
   //0 is select, 1 is  confirmation
 
-  return (
+  const menuOptions = [
+    {
+      title: 'Delete Post',
+      owner: true,
+      confirmationRequired: true,
+      func() {
+        deletePost(post)
+        update()
+      }
+    }
+  ]
+  return ( 
     <motion.div className={`absolute ${ mode == 1 ? 'w-64 h-40 p-3 pl-8 ml-[-125px]' : 'ml-[-50px]' } mt-8  bg-white rounded-lg p-2 shadow-xl duration-700`}>
       { mode == 0 ?
       <motion.div

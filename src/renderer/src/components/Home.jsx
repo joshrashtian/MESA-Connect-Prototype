@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react'
 import { auth } from '../../../../firebase'
-import { getDoc, doc, collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { getDoc, doc, collection, getDocs, query, orderBy, limit } from 'firebase/firestore'
 import { db } from '../../../../firebase'
 import { checkEvents, greetings } from './functions'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -47,7 +47,7 @@ export const Home = () => {
     
     const getEvents = async () => { 
       try {
-        const eventRef = query(collection(db, 'events'), orderBy('start'))
+        const eventRef = query(collection(db, 'events'), orderBy('start'), limit(3))
         const events = await getDocs(eventRef)
         const eventData = events.docs.map((doc) => ({
           ...doc.data(),
@@ -70,7 +70,7 @@ export const Home = () => {
   const sortEvents = async (a) => {
     let filteredEvents = [...a]
     
-    if (!user.interests) {setEvents(a.slice(0, 2)); return} 
+    if (!user.interests) {setEvents(a); return} 
     let interests = user.interests
 
     filteredEvents.map(() => {
