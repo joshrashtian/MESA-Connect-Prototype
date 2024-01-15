@@ -6,12 +6,14 @@ import { motion } from 'framer-motion'
 import OptionsButton from './OptionsButton'
 
 const Wim = ({ wim, update }) => {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState()
   const [loading, setLoading] = useState(true)
   const [menu, setMenu] = useState(false)
 
   useEffect(() => {
     const getUser = async () => {
+      if(user) return
+
       try {
         const userRef = doc(db, 'users', wim.userID)
         const got = await getDoc(userRef)

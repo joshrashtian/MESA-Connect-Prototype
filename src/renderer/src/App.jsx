@@ -36,6 +36,9 @@ function App() {
           <Route path="" element={<Activity />} />
           <Route path='create' element={<PostBuilder />} />
           <Route path=":id" element={<ProfileScreen />}/>
+          <Route path='posts' >
+            <Route path=":id" element={<FullPost />}/>
+          </Route>
         </Route>
         <Route path="/settings" element={<Settings />}/>
         {/*<Route path="/news" element={<News />}/> */}

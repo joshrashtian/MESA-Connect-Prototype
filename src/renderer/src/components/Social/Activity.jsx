@@ -10,8 +10,8 @@ import QuickWim from './QuickWim'
 import { Link } from 'react-router-dom'
 
 const Activity = () => {
-  const [posts, setPosts] = useState([{}])
-  const [activePosts, setActivePosts] = useState([{}])
+  const [posts, setPosts] = useState()
+  const [activePosts, setActivePosts] = useState()
   const [menu, setMenu] = useState(0)
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState()
@@ -19,6 +19,8 @@ const Activity = () => {
   const { scrollYProgress } = useScroll()
   
   const getFeed = async () => {
+    if(posts) return
+
     try {
       const postsRef = query(collection(db, 'posts'), orderBy('postTime'))
       const fetchData = await getDocs(postsRef)

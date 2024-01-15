@@ -32,7 +32,9 @@ const Post = ({ post, current, type }) => {
     >
       <div className="m-3">
         <header className="flex justify-between items-center">
+          <Link to={`/social/posts/${post.id}`}>
           <h1 className=" font-eudoxusbold text-2xl">{post.header}</h1>
+          </Link>
           <Link to={`/social/${post.userID}`}>
             <div className="flex items-center px-1 gap-2 cursor-pointer hover:shadow-md rounded-md hover:scale-105 duration-200">
               <h1 className={`font-eudoxusbold `}>
