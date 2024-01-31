@@ -14,7 +14,7 @@ const Post = ({ post, current, type }) => {
         const userRef = doc(db, 'users', post.userID)
         const got = await getDoc(userRef)
         setUser(got.data())
-        if(user) setLoading(false)
+        if (user) setLoading(false)
       } catch (e) {
         console.log(e)
       }
@@ -26,14 +26,18 @@ const Post = ({ post, current, type }) => {
 
   return (
     <div
-      className={`${!type ? 'w-[100%]' : 'w-[100%]'} py-0.5 mb-3 rounded-xl hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
+      className={`${
+        !type ? 'w-[100%]' : 'w-[100%]'
+      } py-0.5 mb-3 rounded-xl hover:scale-105 hover:shadow-lg cursor-default bg-white duration-200`}
       key={post.id}
-      onContextMenu={e => {e.preventDefault() (<OptionsButton />)}}
+      onContextMenu={(e) => {
+        e.preventDefault()(<OptionsButton />)
+      }}
     >
       <div className="m-3">
         <header className="flex justify-between items-center">
           <Link to={`/social/posts/${post.id}`}>
-          <h1 className=" font-eudoxusbold text-2xl">{post.header}</h1>
+            <h1 className=" font-eudoxusbold text-2xl">{post.header}</h1>
           </Link>
           <Link to={`/social/${post.userID}`}>
             <div className="flex items-center px-1 gap-2 cursor-pointer hover:shadow-md rounded-md hover:scale-105 duration-200">
